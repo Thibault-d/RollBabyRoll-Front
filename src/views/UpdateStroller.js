@@ -25,9 +25,13 @@ export default class UpdateStroller extends Component {
   }
 
   render() {
+    let props = this.props;
+    let theme = this.context;
+    console.log("props", props)
+    console.log("theme", theme)
     return (
       <div>
-        <label for="cars">Choose a car:</label>
+        <label htmlFor="cars">Choose a car:</label>
         <select id="cars">
           <option value="volvo">Volvo</option>
           <option value="saab">Saab</option>

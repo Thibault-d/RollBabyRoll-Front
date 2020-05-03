@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import Strollers from "./views/strollers";
+import Strollers from "./views/Strollers";
 import "./App.css";
 import { Link, Route, Switch } from "react-router-dom";
-import AddStrollers from "./views/addStroller";
+import AddStrollers from "./views/AddStroller";
 import UpdateStroller from "./views/UpdateStroller";
 
 class App extends Component {
+
   render() {
     return (
       <div className="App">
