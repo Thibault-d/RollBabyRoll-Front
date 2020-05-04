@@ -16,3 +16,11 @@
 .App-link {
   color: #61dafb;
 }
+
+.Stroller-container {
+  display:flex;
+}
+
+.Stroller-card {
+  border: solid 1px white;
+}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import apiClient from "../services/strollers.js";
+import apiClient from "../services/Strollers.js";
 
 export default class Strollers extends Component {
   state = {
@@ -26,9 +26,11 @@ export default class Strollers extends Component {
   renderStrollers = () => {
     return this.state.strollers.map((item, index) => {
       return (
-        <div key={index}>
+        <div key={index} className="Stroller-card">
           <p>{item.name}</p>
-          <p>{item.weight}</p>
+          <p>{item.weight} kg</p>
+          <p>{item.storage} L</p>
+          <p>{item.handle}</p>
         </div>
       );
     });
@@ -36,8 +38,8 @@ export default class Strollers extends Component {
 
   render() {
     return (
-      <div>
-        <div className="App-header">{this.renderStrollers()}</div>
+      <div className="App-header">
+        <div className="Stroller-container">{this.renderStrollers()}</div>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import apiClient from "../services/strollers.js";
+import apiClient from "../services/Strollers.js";
 
 export default class addStrollers extends Component {
   state = {
@@ -8,6 +8,14 @@ export default class addStrollers extends Component {
     weight: "",
     storage: "",
     handle: "",
+    dimensions: "",
+    maxweight: "",
+    brakes: "",
+    image: "",
+    reversible: "",
+    birth: "",
+    sport: "",
+    double: "",
   };
 
   handleChange = (e) => {
@@ -19,9 +27,37 @@ export default class addStrollers extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { history } = this.props;
-    const { name, brand, weight, storage, handle } = this.state;
+    const {
+      name,
+      brand,
+      weight,
+      storage,
+      handle,
+      dimensions,
+      maxweight,
+      brakes,
+      image,
+      reversible,
+      birth,
+      sport,
+      double,
+    } = this.state;
     apiClient
-      .createStroller({ name, brand, weight, storage, handle })
+      .createStroller({
+        name,
+        brand,
+        weight,
+        storage,
+        handle,
+        dimensions,
+        maxweight,
+        brakes,
+        image,
+        reversible,
+        birth,
+        sport,
+        double,
+      })
       .then((res) => {
         history.push("/");
       })
@@ -30,45 +66,40 @@ export default class addStrollers extends Component {
       });
   };
 
+  inputType = (item) => {
+    switch (item) {
+      case "weight":
+        return "number";
+      case "maxweight":
+        return "number";
+      case "storage":
+        return "number";
+      default:
+        return "text";
+    }
+  };
+
+  generateForm = () => {
+    return Object.keys(this.state).map((item, index) => {
+      return (
+        <div key={index}>
+          <label>{item}</label>
+          <input
+            type={this.inputType(item)}
+            name={item}
+            placeholder={item}
+            onChange={this.handleChange}
+          />
+        </div>
+      );
+    });
+  };
+
   render() {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="name"
-            onChange={this.handleChange}
-          />
-          <label>Brand</label>
-          <input
-            type="text"
-            name="brand"
-            placeholder="Brand"
-            onChange={this.handleChange}
-          />
-          <label>Weight</label>
-          <input
-            type="number"
-            name="weight"
-            placeholder="Weight"
-            onChange={this.handleChange}
-          />
-          <label>Storage</label>
-          <input
-            type="number"
-            name="storage"
-            placeholder="Storage"
-            onChange={this.handleChange}
-          />
-          <label>Handle</label>
-          <input
-            type="text"
-            name="handle"
-            placeholder="Handle"
-            onChange={this.handleChange}
-          />
+          {this.generateForm()}
           <input type="submit" />
         </form>
       </div>

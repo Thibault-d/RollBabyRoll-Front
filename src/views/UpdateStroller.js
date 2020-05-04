@@ -1,11 +1,15 @@
 import React, { Component } from "react";
-import apiClient from "../services/strollers.js";
+import apiClient from "../services/Strollers.js";
 
 export default class UpdateStroller extends Component {
   state = {
     strollers: [],
     toUpdate: [],
   };
+
+  componentDidMount() {
+    this.loadStrollers();
+  }
 
   loadStrollers() {
     apiClient
@@ -20,24 +24,43 @@ export default class UpdateStroller extends Component {
       });
   }
 
-  componentDidMount() {
-    this.loadStrollers();
-  }
+  generateList = () => {
+    return this.state.strollers.map((item, index) => {
+      return (
+        <option key={index} value={item.name}>
+          {item.name}
+        </option>
+      );
+    });
+  };
+
+  strollerToUpdate = (e) => {
+    function toUpdate(item) {
+      return item.name === e.target.value;
+    }
+    this.setState({
+      toUpdate: this.state.strollers.filter(toUpdate),
+    });
+  };
+
+  renderStroller = () => {
+    if(this.state.toUpdate.length ===1){
+    return Object.keys(this.state.toUpdate[0]).map((item, index) => {
+      return <div key={index}>{item}</div>;
+    });}
+    else{console.log("nope")}
+  };
 
   render() {
-    let props = this.props;
-    let theme = this.context;
-    console.log("props", props)
-    console.log("theme", theme)
     return (
       <div>
-        <label htmlFor="cars">Choose a car:</label>
-        <select id="cars">
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="mercedes">Mercedes</option>
-          <option value="audi">Audi</option>
-        </select>
+        <div>
+          <label htmlFor="strollers">Choose a Stroller to update:</label>
+          <select onChange={this.strollerToUpdate} id="strollers">
+            {this.generateList()}
+          </select>
+          {this.renderStroller()}
+        </div>
       </div>
     );
   }
