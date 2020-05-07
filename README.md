@@ -25,11 +25,7 @@ Browsing:
 - Add / Remove Stroller from benchmark
 - See Stroller detail page
 
-Stroller API:
-- Add Stroller to DB
-- Read Stroller from DB
-- Remove Stroller from DB
-- Update Stroller from DB
+
 
 ## Functionalities Backlog
 
