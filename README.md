@@ -18,25 +18,37 @@ For the Front-End, I want to push my experience in React by using multiple filte
 
 ## User Stories
 
-**View All** - As a user I want to land on the page containing the listing of all Strollers existing in the DB
+Browsing:
+- Browse Strollers
+- Filter Strollers based on several Criterias
+- Rank Strollers based on several Criterias
+- Add / Remove Stroller from benchmark
+- See Stroller detail page
 
-**Filter strollers** - As a regular user, I want to be able to filter using a wide range of criterias
+Stroller API:
+- Add Stroller to DB
+- Read Stroller from DB
+- Remove Stroller from DB
+- Update Stroller from DB
 
-**Rank strollers** - As a regular user, I want to be able to rank a list of stroller using a wide range of criterias
+## Functionalities Backlog
 
-**Add to comparison** - As a regular user, I want to be able to add / remove strollers from the comparator
-
-**404** - As a user I want to see a nice 404 page when I go to a page that doesn’t exist so that I know it was my fault
-
-**500** - As a user I want to see a nice error page when the super team screws it up so that I know that is not my fault
-
-## Backlog
-
-List of other features outside of the MVPs scope
-
-- Signup
+Authentication:
 - Login
 - Logout
+- Register
+
+DevOps:
+- Deploy code online (domain name, hosting service...)
+
+eCommerce:
+- Affiliate Links to purchase products
+- Optimize code for SEO
+- Wishlist
+
+Analytics:
+- Integrate Google Analytics
+
 
 ## ROUTES Backend:
 
