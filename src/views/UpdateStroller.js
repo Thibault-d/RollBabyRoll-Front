@@ -44,11 +44,28 @@ export default class UpdateStroller extends Component {
   };
 
   renderStroller = () => {
-    if(this.state.toUpdate.length ===1){
-    return Object.keys(this.state.toUpdate[0]).map((item, index) => {
-      return <div key={index}>{item}</div>;
-    });}
-    else{console.log("nope")}
+    let item = this.state.toUpdate[0]
+    if (this.state.toUpdate.length === 1) {
+      for (let i in item) {
+         if (item.hasOwnProperty(i)) {
+          console.log(i)
+          return <div key={i}>{item[i]}</div>;
+        }
+      }
+
+      /*Object.keys(this.state.toUpdate[0]).map((item,index) => {
+        console.log(value)
+        return ( 
+          
+          <div key={index}>
+            <label>{item}</label>
+            <input type="text" placeholder=""></input>
+          </div>
+        
+        );
+      });*/
+    } else {
+    }
   };
 
   render() {
