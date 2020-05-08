@@ -8,7 +8,8 @@ export default class addStrollers extends Component {
     weight: "",
     storage: "",
     handle: "",
-    dimensions: "",
+    dimensionsfolded: "",
+    dimensionsopen:"",
     maxweight: "",
     brakes: "",
     image: "",
@@ -16,6 +17,8 @@ export default class addStrollers extends Component {
     birth: "",
     sport: "",
     double: "",
+    pricerange: "",
+    suspensions: ""
   };
 
   handleChange = (e) => {
@@ -33,7 +36,8 @@ export default class addStrollers extends Component {
       weight,
       storage,
       handle,
-      dimensions,
+      dimensionsfolded,
+      dimensionsopen,
       maxweight,
       brakes,
       image,
@@ -41,6 +45,8 @@ export default class addStrollers extends Component {
       birth,
       sport,
       double,
+      pricerange,
+      suspensions
     } = this.state;
     apiClient
       .createStroller({
@@ -49,7 +55,8 @@ export default class addStrollers extends Component {
         weight,
         storage,
         handle,
-        dimensions,
+        dimensionsfolded,
+        dimensionsopen,
         maxweight,
         brakes,
         image,
@@ -57,6 +64,8 @@ export default class addStrollers extends Component {
         birth,
         sport,
         double,
+        pricerange,
+        suspensions
       })
       .then((res) => {
         history.push("/");
