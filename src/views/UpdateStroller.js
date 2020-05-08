@@ -5,6 +5,7 @@ export default class UpdateStroller extends Component {
   state = {
     strollers: [],
     toUpdate: [],
+    updated: [],
   };
 
   componentDidMount() {
@@ -27,7 +28,7 @@ export default class UpdateStroller extends Component {
   generateList = () => {
     return this.state.strollers.map((item, index) => {
       return (
-        <option key={index} value={item.name}>
+        <option key={index} value={item.name} lol={item._id}>
           {item.name}
         </option>
       );
@@ -44,27 +45,32 @@ export default class UpdateStroller extends Component {
   };
 
   renderStroller = () => {
-    let item = this.state.toUpdate[0]
-    if (this.state.toUpdate.length === 1) {
-      for (let i in item) {
-         if (item.hasOwnProperty(i)) {
-          console.log(i)
-          return <div key={i}>{item[i]}</div>;
+    let selectedStroller = this.state.toUpdate;
+    if (selectedStroller.length === 1) {
+      let updateForm = Object.entries(selectedStroller[0]).map(
+        ([key, value], index) => {
+          return (
+            <div key={index}>
+              <label>{key}</label>
+              <input
+                type="text"
+                name={key}
+                value={value}
+                onChange={(e) => {
+                  this.setState({
+                    updated: {...this.state.updated,[e.target.name]:e.target.value}
+                  });
+                  console.log(this.state.updated)
+                }}
+              ></input>
+            </div>
+          );
         }
-      }
+      );
 
-      /*Object.keys(this.state.toUpdate[0]).map((item,index) => {
-        console.log(value)
-        return ( 
-          
-          <div key={index}>
-            <label>{item}</label>
-            <input type="text" placeholder=""></input>
-          </div>
-        
-        );
-      });*/
+      return updateForm;
     } else {
+      console.log("No stroller selected");
     }
   };
 
@@ -73,10 +79,13 @@ export default class UpdateStroller extends Component {
       <div>
         <div>
           <label htmlFor="strollers">Choose a Stroller to update:</label>
-          <select onChange={this.strollerToUpdate} id="strollers">
+          <select onChange={this.strollerToUpdate}>
             {this.generateList()}
           </select>
-          {this.renderStroller()}
+
+            {this.renderStroller()}
+            <input type="submit" value="Update" />
+
         </div>
       </div>
     );
