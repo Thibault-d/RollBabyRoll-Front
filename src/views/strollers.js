@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import apiClient from "../services/Strollers.js";
 
+
 export default class Strollers extends Component {
   state = {
     strollers: [],
     filtered: null,
     priceFilter: {
-      color:"",
-      price:""
+      color: "",
+      price: "",
     },
   };
 
@@ -31,11 +32,15 @@ export default class Strollers extends Component {
   buttonClick = (e) => {
     this.setState(
       {
-        priceFilter: {...this.state.priceFilter, price: e.target.value, color: "white"}
+        priceFilter: {
+          ...this.state.priceFilter,
+          price: e.target.value,
+          color: "white",
+        },
       },
       () => this.filter()
     );
-    console.log(this.state.priceFilter)
+    console.log(this.state.priceFilter);
   };
 
   filter = () => {
@@ -84,6 +89,10 @@ export default class Strollers extends Component {
             <input type="button" value="€" onClick={this.buttonClick} />
             <input type="button" value="€€" onClick={this.buttonClick} />
             <input type="button" value="€€€" onClick={this.buttonClick} />
+          </div>
+          <div className="Weight-filter">
+            <label> Maximum weight</label>
+  
           </div>
         </div>
         <div className="Stroller-container">
