@@ -4,7 +4,11 @@ import apiClient from "../services/Strollers.js";
 export default class Strollers extends Component {
   state = {
     strollers: [],
-    filtered: [],
+    filtered: null,
+    priceFilter: {
+      color:"",
+      price:""
+    },
   };
 
   loadStrollers() {
@@ -24,11 +28,33 @@ export default class Strollers extends Component {
     this.loadStrollers();
   }
 
+  buttonClick = (e) => {
+    this.setState(
+      {
+        priceFilter: {...this.state.priceFilter, price: e.target.value, color: "white"}
+      },
+      () => this.filter()
+    );
+    console.log(this.state.priceFilter)
+  };
+
+  filter = () => {
+    this.setState({
+      filtered: this.state.strollers.filter(
+        (item) => item.pricerange === this.state.priceFilter.price
+      ),
+    });
+  };
+
   renderStrollers = () => {
-    return this.state.strollers.map((item, index) => {
+    let listToDisplay = null;
+    let { strollers, filtered } = this.state;
+    filtered != null ? (listToDisplay = filtered) : (listToDisplay = strollers);
+
+    return listToDisplay.map((item, index) => {
       return (
         <div key={index} className="Stroller-column">
-          <img className="Stroller-img" src={item.image}></img>
+          <img className="Stroller-img" src={item.image} alt={item.name}></img>
           <div>{item.name}</div>
           <div>{item.brand} </div>
           <div>{item.storage} kg</div>
@@ -53,13 +79,16 @@ export default class Strollers extends Component {
     return (
       <div className="App-header">
         <div className="Filter-container">
-          Price Range:
-          <button>+</button>
-          <button>++</button>
+          <div className="Price-filter">
+            Price Range:
+            <input type="button" value="€" onClick={this.buttonClick} />
+            <input type="button" value="€€" onClick={this.buttonClick} />
+            <input type="button" value="€€€" onClick={this.buttonClick} />
+          </div>
         </div>
         <div className="Stroller-container">
           <div>
-          <div className="Stroller-img">Image</div>
+            <div className="Stroller-img">Image</div>
             <div>Model</div>
             <div>Brand </div>
             <div>Storage</div>

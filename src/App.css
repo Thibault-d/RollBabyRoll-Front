@@ -17,6 +17,10 @@
   color: #61dafb;
 }
 
+.Filter-container {
+  margin-bottom: 100px;
+}
+
 .Stroller-container {
   display: flex;
   flex-direction: row;
@@ -36,4 +40,13 @@
 .Stroller-img {
   height: 150px;
   width: 150px;
+}
+
+.Price-filter>input {
+  border: 0px solid white;
+  border-radius: 15%;
+  width: 60px;
+  height: 40px;
+  margin-left: 15px;
+  background-color: white;
 }

@@ -13,6 +13,10 @@ class ApiClient {
   createStroller(body) {
     return this.apiClient.post("/strollers", body);
   }
+  
+  updateStroller(body) {
+    return this.apiClient.post("/strollers/update", body);
+  }
 }
 
 const apiClient = new ApiClient();

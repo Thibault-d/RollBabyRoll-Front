@@ -4,8 +4,7 @@ import apiClient from "../services/Strollers.js";
 export default class UpdateStroller extends Component {
   state = {
     strollers: [],
-    toUpdate: [],
-    updated: [],
+    toUpdate: {},
   };
 
   componentDidMount() {
@@ -40,14 +39,14 @@ export default class UpdateStroller extends Component {
       return item.name === e.target.value;
     }
     this.setState({
-      toUpdate: this.state.strollers.filter(toUpdate),
+      toUpdate: this.state.strollers.filter(toUpdate)[0],
     });
   };
 
   renderStroller = () => {
-    let selectedStroller = this.state.toUpdate;
-    if (selectedStroller.length === 1) {
-      let updateForm = Object.entries(selectedStroller[0]).map(
+    const selectedStroller = this.state.toUpdate;
+    if (selectedStroller !== undefined) {
+      let updateForm = Object.entries(selectedStroller).map(
         ([key, value], index) => {
           return (
             <div key={index}>
@@ -57,10 +56,16 @@ export default class UpdateStroller extends Component {
                 name={key}
                 value={value}
                 onChange={(e) => {
-                  this.setState({
-                    updated: {...this.state.updated,[e.target.name]:e.target.value}
-                  });
-                  console.log(this.state.updated)
+                  this.setState(
+                    {
+                      toUpdate: Object.assign(this.state.toUpdate, {
+                        [e.target.name]: e.target.value,
+                      }),
+                    },
+                    () => {
+                      console.log(this.state.toUpdate);
+                    }
+                  );
                 }}
               ></input>
             </div>
@@ -74,6 +79,17 @@ export default class UpdateStroller extends Component {
     }
   };
 
+  handleClick = () => {
+    apiClient
+      .updateStroller(this.state.toUpdate)
+      .then((data) => {
+        console.log("Stroller Updated", data.name);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     return (
       <div>
@@ -82,10 +98,8 @@ export default class UpdateStroller extends Component {
           <select onChange={this.strollerToUpdate}>
             {this.generateList()}
           </select>
-
-            {this.renderStroller()}
-            <input type="submit" value="Update" />
-
+          {this.renderStroller()}
+          <input type="submit" value="Update" onClick={this.handleClick} />
         </div>
       </div>
     );
