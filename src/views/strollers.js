@@ -3,11 +3,9 @@ import apiClient from "../services/Strollers.js";
 
 export default class Strollers extends Component {
   state = {
+    test: [0, 0, 0, 0],
     allStrollers: [],
     filteredStrollers: null,
-    filterButtonState: {
-      priceButton: "",
-    },
     filters: {
       priceFilter: "",
       weightFilter: "",
@@ -32,12 +30,12 @@ export default class Strollers extends Component {
   }
 
   buttonClickHandler = (e) => {
+    let id = e.target.id;
+    let buttonStatus = this.state.test;
+    buttonStatus[id] === id ? (buttonStatus[id] = 0) : (buttonStatus[id] = id);
+    this.forceUpdate();
     this.setState(
       {
-        filterButtonState: {
-          ...this.state.filterButtonState,
-          priceButton: e.target.id,
-        },
         filters: {
           ...this.state.filters,
           priceFilter: e.target.value,
@@ -48,10 +46,10 @@ export default class Strollers extends Component {
   };
 
   buttonColorHandler = (id) => {
-    console.log(id, this.state.filterButtonState.priceButton)
-    return (id === this.state.filterButtonState.priceButton)
-      ? "ActiveButton"
-      : "InactiveButton";
+    let string = ""
+    let buttonStatus = this.state.test;
+    buttonStatus[id] === id ?   string = "ActiveButton" :  string = "InactiveButton";
+    return string
   };
 
   filter = () => {
