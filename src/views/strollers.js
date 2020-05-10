@@ -3,12 +3,9 @@ import apiClient from "../services/Strollers.js";
 
 export default class Strollers extends Component {
   state = {
-    test: [null, null, null],
+    filters: [null, null, null],
     allStrollers: [],
     filteredStrollers: null,
-    filters: {
-      priceFilter: "",
-    },
   };
 
   loadStrollers() {
@@ -30,25 +27,17 @@ export default class Strollers extends Component {
 
   buttonClickHandler = (e) => {
     let id = e.target.id;
-    let buttonStatus = this.state.test;
+    let buttonStatus = this.state.filters;
     buttonStatus[id] === id
       ? (buttonStatus[id] = null)
       : (buttonStatus[id] = id);
     this.forceUpdate();
-    this.setState(
-      {
-        filters: {
-          ...this.state.filters,
-          priceFilter: e.target.value,
-        },
-      },
-      () => this.filter()
-    );
+    this.filter()
   };
 
   buttonColorHandler = (id) => {
     let string = "";
-    let buttonStatus = this.state.test;
+    let buttonStatus = this.state.filters;
     buttonStatus[id] === id
       ? (string = "ActiveButton")
       : (string = "InactiveButton");
@@ -56,27 +45,27 @@ export default class Strollers extends Component {
   };
 
   filterConstruction = () => {
-    let { test } = this.state;
+    let { filters } = this.state;
     let clean = [];
     let a = 0;
-    test.map((item, index) => {
-      if (test[index] === "0") {
+    filters.map((item, index) => {
+      if (filters[index] === "0") {
         clean[a] = "€";
-      } else if (test[index] === "1") {
+      } else if (filters[index] === "1") {
         clean[a] = "€€";
-      } else if (test[index] === "2") {
+      } else if (filters[index] === "2") {
         clean[a] = "€€€";
       }
       a++;
+      return clean;
     });
     return clean;
   };
 
   filter = () => {
-    let { filteredStrollers, allStrollers } = this.state;
+    let { allStrollers } = this.state;
     let filterArray = this.filterConstruction();
-    let essai = "";
-
+    let essai = null;
     essai = filterArray.map((item, index) =>
       allStrollers.filter((item) => item.pricerange === filterArray[index])
     );
@@ -120,7 +109,7 @@ export default class Strollers extends Component {
       <div className="App-header">
         <div className="Filter-container">
           <div className="Price-filter">
-            Price Range:
+            <h2>Price Range:</h2>
             <input
               type="button"
               id="0"
@@ -144,7 +133,7 @@ export default class Strollers extends Component {
             />
           </div>
           <div className="Weight-filter">
-            <label> Maximum weight</label>
+             Maximum weight
           </div>
         </div>
         <div className="Stroller-container">
