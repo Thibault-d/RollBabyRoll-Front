@@ -3,12 +3,11 @@ import apiClient from "../services/Strollers.js";
 
 export default class Strollers extends Component {
   state = {
-    test: [0, 0, 0, 0],
+    test: [null, null, null],
     allStrollers: [],
     filteredStrollers: null,
     filters: {
       priceFilter: "",
-      weightFilter: "",
     },
   };
 
@@ -32,7 +31,9 @@ export default class Strollers extends Component {
   buttonClickHandler = (e) => {
     let id = e.target.id;
     let buttonStatus = this.state.test;
-    buttonStatus[id] === id ? (buttonStatus[id] = 0) : (buttonStatus[id] = id);
+    buttonStatus[id] === id
+      ? (buttonStatus[id] = null)
+      : (buttonStatus[id] = id);
     this.forceUpdate();
     this.setState(
       {
@@ -46,18 +47,42 @@ export default class Strollers extends Component {
   };
 
   buttonColorHandler = (id) => {
-    let string = ""
+    let string = "";
     let buttonStatus = this.state.test;
-    buttonStatus[id] === id ?   string = "ActiveButton" :  string = "InactiveButton";
-    return string
+    buttonStatus[id] === id
+      ? (string = "ActiveButton")
+      : (string = "InactiveButton");
+    return string;
+  };
+
+  filterConstruction = () => {
+    let { test } = this.state;
+    let clean = [];
+    let a = 0;
+    test.map((item, index) => {
+      if (test[index] === "0") {
+        clean[a] = "€";
+      } else if (test[index] === "1") {
+        clean[a] = "€€";
+      } else if (test[index] === "2") {
+        clean[a] = "€€€";
+      }
+      a++;
+    });
+    return clean;
   };
 
   filter = () => {
+    let { filteredStrollers, allStrollers } = this.state;
+    let filterArray = this.filterConstruction();
+    let essai = "";
+
+    essai = filterArray.map((item, index) =>
+      allStrollers.filter((item) => item.pricerange === filterArray[index])
+    );
     this.setState({
-      filteredStrollers: this.state.allStrollers.filter(
-        (item) => item.pricerange === this.state.filters.priceFilter
-      ),
-    });
+      filteredStrollers: essai.flat()
+    })
   };
 
   renderStrollers = () => {
@@ -66,7 +91,6 @@ export default class Strollers extends Component {
     filteredStrollers != null
       ? (listToDisplay = filteredStrollers)
       : (listToDisplay = allStrollers);
-
     return listToDisplay.map((item, index) => {
       return (
         <div key={index} className="Stroller-column">
@@ -99,22 +123,22 @@ export default class Strollers extends Component {
             Price Range:
             <input
               type="button"
+              id="0"
+              className={this.buttonColorHandler("0")}
+              value="€"
+              onClick={this.buttonClickHandler}
+            />
+            <input
+              type="button"
               id="1"
               className={this.buttonColorHandler("1")}
-              value="€"
+              value="€€"
               onClick={this.buttonClickHandler}
             />
             <input
               type="button"
               id="2"
               className={this.buttonColorHandler("2")}
-              value="€€"
-              onClick={this.buttonClickHandler}
-            />
-            <input
-              type="button"
-              id="3"
-              className={this.buttonColorHandler("3")}
               value="€€€"
               onClick={this.buttonClickHandler}
             />

@@ -27,7 +27,7 @@ export default class UpdateStroller extends Component {
   generateList = () => {
     return this.state.strollers.map((item, index) => {
       return (
-        <option key={index} value={item.name} lol={item._id}>
+        <option key={index} value={item.name}>
           {item.name}
         </option>
       );
@@ -56,16 +56,11 @@ export default class UpdateStroller extends Component {
                 name={key}
                 value={value}
                 onChange={(e) => {
-                  this.setState(
-                    {
-                      toUpdate: Object.assign(this.state.toUpdate, {
-                        [e.target.name]: e.target.value,
-                      }),
-                    },
-                    () => {
-                      console.log(this.state.toUpdate);
-                    }
-                  );
+                  this.setState({
+                    toUpdate: Object.assign(this.state.toUpdate, {
+                      [e.target.name]: e.target.value,
+                    }),
+                  });
                 }}
               ></input>
             </div>
