@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import apiClient from "../services/Strollers.js";
 
-
 export default class Strollers extends Component {
   state = {
-    strollers: [],
-    filtered: null,
-    priceFilter: {
-      color: "",
-      price: "",
+    allStrollers: [],
+    filteredStrollers: null,
+    filterButtonState: {
+      priceButton: "",
+    },
+    filters: {
+      priceFilter: "",
+      weightFilter: "",
     },
   };
 
@@ -17,7 +19,7 @@ export default class Strollers extends Component {
       .getAllStrollers()
       .then(({ data }) => {
         this.setState({
-          strollers: data,
+          allStrollers: data,
         });
       })
       .catch((err) => {
@@ -29,32 +31,43 @@ export default class Strollers extends Component {
     this.loadStrollers();
   }
 
-  buttonClick = (e) => {
+  buttonClickHandler = (e) => {
     this.setState(
       {
-        priceFilter: {
-          ...this.state.priceFilter,
-          price: e.target.value,
-          color: "white",
+        filterButtonState: {
+          ...this.state.filterButtonState,
+          priceButton: e.target.id,
+        },
+        filters: {
+          ...this.state.filters,
+          priceFilter: e.target.value,
         },
       },
       () => this.filter()
     );
-    console.log(this.state.priceFilter);
+  };
+
+  buttonColorHandler = (id) => {
+    console.log(id, this.state.filterButtonState.priceButton)
+    return (id === this.state.filterButtonState.priceButton)
+      ? "ActiveButton"
+      : "InactiveButton";
   };
 
   filter = () => {
     this.setState({
-      filtered: this.state.strollers.filter(
-        (item) => item.pricerange === this.state.priceFilter.price
+      filteredStrollers: this.state.allStrollers.filter(
+        (item) => item.pricerange === this.state.filters.priceFilter
       ),
     });
   };
 
   renderStrollers = () => {
     let listToDisplay = null;
-    let { strollers, filtered } = this.state;
-    filtered != null ? (listToDisplay = filtered) : (listToDisplay = strollers);
+    let { allStrollers, filteredStrollers } = this.state;
+    filteredStrollers != null
+      ? (listToDisplay = filteredStrollers)
+      : (listToDisplay = allStrollers);
 
     return listToDisplay.map((item, index) => {
       return (
@@ -86,13 +99,30 @@ export default class Strollers extends Component {
         <div className="Filter-container">
           <div className="Price-filter">
             Price Range:
-            <input type="button" value="€" onClick={this.buttonClick} />
-            <input type="button" value="€€" onClick={this.buttonClick} />
-            <input type="button" value="€€€" onClick={this.buttonClick} />
+            <input
+              type="button"
+              id="1"
+              className={this.buttonColorHandler("1")}
+              value="€"
+              onClick={this.buttonClickHandler}
+            />
+            <input
+              type="button"
+              id="2"
+              className={this.buttonColorHandler("2")}
+              value="€€"
+              onClick={this.buttonClickHandler}
+            />
+            <input
+              type="button"
+              id="3"
+              className={this.buttonColorHandler("3")}
+              value="€€€"
+              onClick={this.buttonClickHandler}
+            />
           </div>
           <div className="Weight-filter">
             <label> Maximum weight</label>
-  
           </div>
         </div>
         <div className="Stroller-container">
