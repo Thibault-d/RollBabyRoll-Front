@@ -5,8 +5,9 @@ export default class Strollers extends Component {
   state = {
     allStrollers: [],
     filteredStrollers: null,
-    priceFilters: [null, null, null],
+    priceFilters: [],
     birthFilter: [null, null],
+    weightFilter: 20,
   };
 
   loadStrollers() {
@@ -46,21 +47,38 @@ export default class Strollers extends Component {
   };
 
   filter = () => {
-    let { allStrollers, priceFilters } = this.state;
-    let filterResult = null;
-    if(priceFilters ){console.log("not null")} else {console.log("null")}
-    filterResult = priceFilters.map((item, index) =>
-      allStrollers.filter((item) => item.pricerange === priceFilters[index])
-    );
+    let { allStrollers, priceFilters, weightFilter } = this.state;
+    let filterResult = [];
+    if (this.state.priceFilters.some((element) => element != null)) {
+      console.log("if")
+      filterResult = priceFilters.map((item, index) =>
+        allStrollers
+          .filter((item) => item.weight <= weightFilter)
+          .filter((item) => item.pricerange === priceFilters[index])
+      );
+      console.log(filterResult)
+    } else {
+      filterResult = allStrollers.filter((item) => item.weight <= weightFilter)
+      console.log(filterResult)
+    }
     this.setState({
       filteredStrollers: filterResult.flat(),
     });
   };
 
+  sliderChangeHandler = (e) => {
+    this.setState(
+      {
+        weightFilter: e.target.value,
+      },
+      this.filter()
+    );
+  };
+
   renderStrollers = () => {
     let listToDisplay = null;
     let { allStrollers, filteredStrollers } = this.state;
-    filteredStrollers != null
+    filteredStrollers
       ? (listToDisplay = filteredStrollers)
       : (listToDisplay = allStrollers);
     return listToDisplay.map((item, index) => {
@@ -92,7 +110,7 @@ export default class Strollers extends Component {
       <div className="App-header">
         <div className="Filter-container">
           <div className="Price-filter">
-            <h2>Price Range:</h2>
+            <h3>Price Range:</h3>
             <input
               type="button"
               id="0"
@@ -118,8 +136,21 @@ export default class Strollers extends Component {
               onClick={this.buttonClickHandler}
             />
           </div>
+          <div className="Weigth-filter">
+            <h3>Maximum weight: {this.state.weightFilter}kg</h3>
+            <input
+              type="range"
+              min="5"
+              max="20"
+              value={this.state.weightFilter}
+              className="slider"
+              id="myRange"
+              onChange={this.sliderChangeHandler}
+            />
+          </div>
+
           <div className="Price-filter">
-            <h2>Can be used from birth?</h2>
+            <h3>Suitable after birth </h3>
             <input
               type="button"
               id="3"
@@ -137,27 +168,27 @@ export default class Strollers extends Component {
               onClick={this.buttonClickHandler}
             />
           </div>
-          <div className="Stroller-container">
-            <div>
-              <div className="Stroller-img">Image</div>
-              <div>Model</div>
-              <div>Brand </div>
-              <div>Storage</div>
-              <div>Handle</div>
-              <div>Dimension folded </div>
-              <div>Dimension open </div>
-              <div>Maximum Weight </div>
-              <div>Weight </div>
-              <div>Brakes </div>
-              <div>Reversible</div>
-              <div>Use from birth</div>
-              <div>Use for sport </div>
-              <div>Double </div>
-              <div>Price range</div>
-              <div>Suspensions</div>
-            </div>
-            {this.renderStrollers()}
+        </div>
+        <div className="Stroller-container">
+          <div>
+            <div className="Stroller-img">Image</div>
+            <div>Model</div>
+            <div>Brand </div>
+            <div>Storage</div>
+            <div>Handle</div>
+            <div>Dimension folded </div>
+            <div>Dimension open </div>
+            <div>Maximum Weight </div>
+            <div>Weight </div>
+            <div>Brakes </div>
+            <div>Reversible</div>
+            <div>Use from birth</div>
+            <div>Use for sport </div>
+            <div>Double </div>
+            <div>Price range</div>
+            <div>Suspensions</div>
           </div>
+          {this.renderStrollers()}
         </div>
       </div>
     );
