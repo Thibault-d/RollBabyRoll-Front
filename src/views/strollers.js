@@ -5,7 +5,7 @@ export default class Strollers extends Component {
   state = {
     allStrollers: [],
     filteredStrollers: null,
-    filter: [null, null, null, 20, null, null],
+    filter: [null, null, null, undefined, null, null]
   };
 
   loadStrollers() {
@@ -46,26 +46,60 @@ export default class Strollers extends Component {
 
   filter = () => {
     let { allStrollers, filter } = this.state;
-    let filterResult = [];
+    let priceResult,
+      birthResult,
+      weightResult,
+      activeFilters,
+      concatResult = [];
+    
+    let counts = {};
 
-    if (this.state.filter.some((element) => element != null)) {
-      filterResult = filter.map((item, index) =>  
-      allStrollers
-          .filter((item) => item.pricerange === filter[index])
-          .filter((item) => item.weight <= filter[3])
- 
-      );
-    } else {
-      filterResult = allStrollers;
+    let priceFilter = filter.slice(0, 3);
+    let priceFilterStatus = priceFilter.some((el) => el !== null) ? 1 : 0;
+
+    let weightFilter = filter[3];
+    let weightFilterStatus = weightFilter !== 20 ? 1 : 0;
+
+    let birthFilter = filter.slice(4, 6);
+    let birthFilterStatus = birthFilter.some((el) => el !== null) ? 1 : 0;
+    let idResult = [];
+    let test = []
+    activeFilters = priceFilterStatus + weightFilterStatus + birthFilterStatus; /* counting number of active filters */
+
+    priceResult = priceFilter.map((item, index) =>
+      allStrollers.filter((item) => item.pricerange === priceFilter[index])
+    );
+
+    weightResult = allStrollers.filter((item) => item.weight <= weightFilter);
+
+    birthResult = birthFilter.map((item, index) =>
+      allStrollers.filter((item) => item.birth === birthFilter[index])
+    );
+
+    concatResult = concatResult.concat(priceResult.flat(), weightResult, birthResult.flat()); /*joining all filter results */
+    idResult = concatResult.map((item, index) => (idResult[index] = item._id)); 
+
+    for (let i = 0; i < idResult.length; i++) {
+      let num = idResult[i];
+      counts[num] = counts[num] ? counts[num] + 1 : 1;
     }
-    this.setState({
-      filteredStrollers: filterResult.flat(),
+
+  Object.keys(counts).forEach((key) => {
+      if (counts[key] === activeFilters) {
+        test.push(key)
+
+      } else{}
     });
+
+this.setState({
+  filteredStrollers: test.map((item, index) => allStrollers.filter((item) => item._id === test[index])).flat()
+})
+
+
   };
 
   sliderChangeHandler = (e) => {
     this.state.filter[3] = e.target.value;
-    this.forceUpdate();
     this.filter();
   };
 

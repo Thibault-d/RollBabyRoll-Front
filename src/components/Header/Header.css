@@ -1,0 +1,17 @@
+.Header-container {
+    background-color: black;
+    display: flex;
+  }
+  
+  .Header-container>img {
+    padding: 10px 0px 10px 50px;
+    width: 100px;
+  }
+  
+  p {
+    display:flex;
+    align-items: center;
+    margin-left: 50px;
+    color: white;
+
+  }
