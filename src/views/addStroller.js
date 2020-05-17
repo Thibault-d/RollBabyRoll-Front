@@ -8,6 +8,8 @@ export default class addStrollers extends Component {
     weight: "",
     storage: "",
     handle: "",
+    allterrain: "",
+    airline: "",
     dimensionsfolded: "",
     dimensionsopen:"",
     maxweight: "",
@@ -36,6 +38,8 @@ export default class addStrollers extends Component {
       weight,
       storage,
       handle,
+      allterrain,
+      airline,
       dimensionsfolded,
       dimensionsopen,
       maxweight,
@@ -46,7 +50,7 @@ export default class addStrollers extends Component {
       sport,
       double,
       pricerange,
-      suspensions
+      suspensions,
     } = this.state;
     apiClient
       .createStroller({
@@ -55,6 +59,8 @@ export default class addStrollers extends Component {
         weight,
         storage,
         handle,
+        allterrain,
+        airline,
         dimensionsfolded,
         dimensionsopen,
         maxweight,
@@ -65,7 +71,7 @@ export default class addStrollers extends Component {
         sport,
         double,
         pricerange,
-        suspensions
+        suspensions,
       })
       .then((res) => {
         history.push("/");
@@ -95,6 +101,7 @@ export default class addStrollers extends Component {
           <label>{item}</label>
           <input
             type={this.inputType(item)}
+            step="0.1"
             name={item}
             placeholder={item}
             onChange={this.handleChange}

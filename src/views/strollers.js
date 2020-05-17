@@ -115,19 +115,15 @@ this.setState({
           <img className="Stroller-img" src={item.image} alt={item.name}></img>
           <div>{item.name}</div>
           <div>{item.brand} </div>
-          <div>{item.storage} kg</div>
-          <div>{item.handle}</div>
-          <div>{item.dimensionsfolded}</div>
-          <div>{item.dimensionsopen}</div>
-          <div>{item.maxweight} kg</div>
           <div>{item.weight} kg</div>
-          <div>{item.brakes}</div>
-          <div>{item.reversible}</div>
-          <div>{item.birth}</div>
-          <div>{item.sport}</div>
-          <div>{item.double}</div>
           <div>{item.pricerange}</div>
-          <div>{item.suspensions}</div>
+          <div>{item.birth}</div>
+          <div>{item.maxweight} kg</div>
+          <div>{item.handle}</div>
+          <div>{item.sport}</div>
+          <div>{item.allterrain}</div>
+          <div>{item.airline}</div>
+          <div>{item.double}</div>
         </div>
       );
     });
@@ -177,7 +173,7 @@ this.setState({
             />
           </div>
           <div className="Price-filter">
-            <h3>Suitable after birth </h3>
+            <h3>Suitable for newborn </h3>
             <input
               type="button"
               id="4"
@@ -197,23 +193,19 @@ this.setState({
           </div>
         </div>
         <div className="Stroller-container">
-          <div>
-            <div className="Stroller-img">Image</div>
+          <div  className="labels">
+            <div className="Stroller-img"></div>
             <div>Model</div>
             <div>Brand </div>
-            <div>Storage</div>
-            <div>Handle</div>
-            <div>Dimension folded </div>
-            <div>Dimension open </div>
-            <div>Maximum Weight </div>
             <div>Weight </div>
-            <div>Brakes </div>
-            <div>Reversible</div>
-            <div>Use from birth</div>
-            <div>Use for sport </div>
-            <div>Double </div>
             <div>Price range</div>
-            <div>Suspensions</div>
+            <div>Suitable for newborn</div>
+            <div>Maximum Weight </div>
+            <div>Handle</div>
+            <div>Ok for sport </div>
+            <div>All terrain</div>           
+            <div>Carry-on in plane</div>
+            <div>Double </div>
           </div>
           {this.renderStrollers()}
         </div>
