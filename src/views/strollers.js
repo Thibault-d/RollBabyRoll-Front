@@ -4,8 +4,8 @@ import apiClient from "../services/Strollers.js";
 export default class Strollers extends Component {
   state = {
     allStrollers: [],
-    filteredStrollers: null,
-    filter: [null, null, null, undefined, null, null]
+    filteredStrollers: [],
+    filter: [null, null, null, 20, null, null],
   };
 
   loadStrollers() {
@@ -51,7 +51,7 @@ export default class Strollers extends Component {
       weightResult,
       activeFilters,
       concatResult = [];
-    
+
     let counts = {};
 
     let priceFilter = filter.slice(0, 3);
@@ -63,8 +63,11 @@ export default class Strollers extends Component {
     let birthFilter = filter.slice(4, 6);
     let birthFilterStatus = birthFilter.some((el) => el !== null) ? 1 : 0;
     let idResult = [];
-    let test = []
-    activeFilters = priceFilterStatus + weightFilterStatus + birthFilterStatus; /* counting number of active filters */
+    let test = [];
+    activeFilters =
+      priceFilterStatus +
+      weightFilterStatus +
+      birthFilterStatus; /* counting number of active filters */
 
     priceResult = priceFilter.map((item, index) =>
       allStrollers.filter((item) => item.pricerange === priceFilter[index])
@@ -76,26 +79,32 @@ export default class Strollers extends Component {
       allStrollers.filter((item) => item.birth === birthFilter[index])
     );
 
-    concatResult = concatResult.concat(priceResult.flat(), weightResult, birthResult.flat()); /*joining all filter results */
-    idResult = concatResult.map((item, index) => (idResult[index] = item._id)); 
+    concatResult = concatResult.concat(
+      priceResult.flat(),
+      weightResult,
+      birthResult.flat()
+    ); /*joining all filter results */
+    idResult = concatResult.map((item, index) => (idResult[index] = item._id));
 
     for (let i = 0; i < idResult.length; i++) {
       let num = idResult[i];
       counts[num] = counts[num] ? counts[num] + 1 : 1;
     }
 
-  Object.keys(counts).forEach((key) => {
+    Object.keys(counts).forEach((key) => {
       if (counts[key] === activeFilters) {
-        test.push(key)
-
-      } else{}
+        test.push(key);
+      } else {
+      }
     });
 
-this.setState({
-  filteredStrollers: test.map((item, index) => allStrollers.filter((item) => item._id === test[index])).flat()
-})
-
-
+    this.setState({
+      filteredStrollers: test
+        .map((item, index) =>
+          allStrollers.filter((item) => item._id === test[index])
+        )
+        .flat(),
+    });
   };
 
   sliderChangeHandler = (e) => {
@@ -104,29 +113,43 @@ this.setState({
   };
 
   renderStrollers = () => {
-    let listToDisplay = null;
+    let listToDisplay = [];
     let { allStrollers, filteredStrollers } = this.state;
     filteredStrollers
       ? (listToDisplay = filteredStrollers)
       : (listToDisplay = allStrollers);
-    return listToDisplay.map((item, index) => {
+
+    if (filteredStrollers.length === 0) {
       return (
-        <div key={index} className="Stroller-column">
-          <img className="Stroller-img" src={item.image} alt={item.name}></img>
-          <div>{item.name}</div>
-          <div>{item.brand} </div>
-          <div>{item.weight} kg</div>
-          <div>{item.pricerange}</div>
-          <div>{item.birth}</div>
-          <div>{item.maxweight} kg</div>
-          <div>{item.handle}</div>
-          <div>{item.sport}</div>
-          <div>{item.allterrain}</div>
-          <div>{item.airline}</div>
-          <div>{item.double}</div>
+        <div className="No-results">
+          <div>No Results :-( </div>
+          <div>Try changing the filters !</div>
         </div>
       );
-    });
+    } else {
+      return listToDisplay.map((item, index) => {
+        return (
+          <div key={index} className="Stroller-column">
+            <img
+              className="Stroller-img"
+              src={item.image}
+              alt={item.name}
+            ></img>
+            <div>{item.name}</div>
+            <div>{item.brand} </div>
+            <div>{item.weight} kg</div>
+            <div>{item.pricerange}</div>
+            <div>{item.birth}</div>
+            <div>{item.maxweight} kg</div>
+            <div>{item.handle}</div>
+            <div>{item.sport}</div>
+            <div>{item.allterrain}</div>
+            <div>{item.airline}</div>
+            <div>{item.double}</div>
+          </div>
+        );
+      });
+    }
   };
 
   render() {
@@ -193,7 +216,7 @@ this.setState({
           </div>
         </div>
         <div className="Stroller-container">
-          <div  className="labels">
+          <div className="labels">
             <div className="Stroller-img"></div>
             <div>Model</div>
             <div>Brand </div>
@@ -203,7 +226,7 @@ this.setState({
             <div>Maximum Weight </div>
             <div>Handle</div>
             <div>Ok for sport </div>
-            <div>All terrain</div>           
+            <div>All terrain</div>
             <div>Carry-on in plane</div>
             <div>Double </div>
           </div>
