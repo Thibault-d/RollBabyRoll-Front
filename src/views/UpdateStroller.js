@@ -52,6 +52,7 @@ export default class UpdateStroller extends Component {
             <div key={index}>
               <label>{key}</label>
               <input
+              className = "Inputs"
                 type="text"
                 name={key}
                 value={value}
@@ -88,13 +89,15 @@ export default class UpdateStroller extends Component {
   render() {
     return (
       <div>
-        <div>
-          <label htmlFor="strollers">Choose a Stroller to update:</label>
+        <div className="Update">
+          <h2>Choose a Stroller to update:</h2>
           <select onChange={this.strollerToUpdate}>
             {this.generateList()}
           </select>
+          <div className="Form">
           {this.renderStroller()}
-          <input type="submit" value="Update" onClick={this.handleClick} />
+          </div>
+          <input className="Submit-button" type="submit" value="Update" onClick={this.handleClick} />
         </div>
       </div>
     );

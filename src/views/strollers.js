@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import apiClient from "../services/Strollers.js";
+import { Link } from "react-router-dom";
 
 export default class Strollers extends Component {
   state = {
@@ -146,6 +147,9 @@ export default class Strollers extends Component {
             <div>{item.allterrain}</div>
             <div>{item.airline}</div>
             <div>{item.double}</div>
+            <Link to={`/detail:${item._id}`}>
+              <input type="button" value="More details" />
+            </Link>
           </div>
         );
       });

@@ -127,3 +127,22 @@ body {
   cursor: pointer;
   /* Cursor on hover */
 }
+
+.Form{
+  width: 30%;
+  text-align: right;
+}
+
+.Inputs{
+  margin-left: 20px;
+  width: 200px;
+  text-align: center;
+}
+
+.Submit-button {
+  margin-top: 20px;
+}
+
+.Update {
+  margin-top: 50px;
+}

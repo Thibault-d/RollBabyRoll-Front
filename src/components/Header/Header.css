@@ -1,17 +1,29 @@
 .Header-container {
-    background-color: black;
-    display: flex;
-  }
-  
-  .Header-container>img {
-    padding: 10px 0px 10px 50px;
-    width: 100px;
-  }
-  
-  p {
-    display:flex;
-    align-items: center;
-    margin-left: 50px;
-    color: white;
+  background-color: black;
+  display: flex;
+}
 
-  }
+.Header-container>img {
+  padding: 10px 0px 10px 50px;
+  width: 100px;
+}
+
+p {
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
+  color: white;
+}
+
+.Menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 200px;
+  border: solid white 1px;
+}
+
+.Link {
+  text-decoration: none;
+  color: white;
+}

@@ -10,6 +10,10 @@ class ApiClient {
     return this.apiClient.get("/strollers");
   }
 
+  getOneStroller(id) {
+    return this.apiClient.get("/strollers/detail", id);
+  }
+
   createStroller(body) {
     return this.apiClient.post("/strollers", body);
   }

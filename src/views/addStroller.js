@@ -98,8 +98,8 @@ export default class addStrollers extends Component {
     return Object.keys(this.state).map((item, index) => {
       return (
         <div key={index}>
-          <label>{item}</label>
-          <input
+          <label className="Labels">{item}</label>
+          <input className="Inputs"
             type={this.inputType(item)}
             step="0.1"
             name={item}
@@ -113,10 +113,11 @@ export default class addStrollers extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Form">
+        <h2>Add a new Stroller</h2>
         <form onSubmit={this.handleSubmit}>
           {this.generateForm()}
-          <input type="submit" />
+          <input className="Submit-button" type="submit" value="Add to Database"/>
         </form>
       </div>
     );
