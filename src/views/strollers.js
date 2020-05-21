@@ -157,87 +157,99 @@ export default class Strollers extends Component {
   };
 
   renderFilters = () => {
-    const sideBar = this.state.sideBar
+    const sideBar = this.state.sideBar;
     if (sideBar === true) {
       return (
-        <div className="Filter-container">
-           <input type="button" onClick={this.handleSideBar}/>
-          <div className="Button-filter">
-            <h3>Price Range:</h3>
-            <input
-              type="button"
-              id="0"
-              name="€"
-              className={this.buttonColorHandler("0", "€")}
-              value="€"
-              onClick={this.buttonClickHandler}
-            />
-            <input
-              type="button"
-              id="1"
-              className={this.buttonColorHandler("1", "€€")}
-              name="€€"
-              value="€€"
-              onClick={this.buttonClickHandler}
-            />
-            <input
-              type="button"
-              id="2"
-              className={this.buttonColorHandler("2", "€€€")}
-              name="€€€"
-              value="€€€"
-              onClick={this.buttonClickHandler}
-            />
+        <div className="Sidebar">
+          <div className="Filter-container">
+            <div className="Button-filter">
+              <h3>Price Range:</h3>
+              <input
+                type="button"
+                id="0"
+                name="€"
+                className={this.buttonColorHandler("0", "€")}
+                value="€"
+                onClick={this.buttonClickHandler}
+              />
+              <input
+                type="button"
+                id="1"
+                className={this.buttonColorHandler("1", "€€")}
+                name="€€"
+                value="€€"
+                onClick={this.buttonClickHandler}
+              />
+              <input
+                type="button"
+                id="2"
+                className={this.buttonColorHandler("2", "€€€")}
+                name="€€€"
+                value="€€€"
+                onClick={this.buttonClickHandler}
+              />
+            </div>
+            <div className="Weigth-filter">
+              <h3>Maximum weight: {this.state.filter[3]}kg</h3>
+              <input
+                type="range"
+                min="5"
+                max="20"
+                value={this.state.filter[3]}
+                className="slider"
+                id="myRange"
+                onChange={this.sliderChangeHandler}
+              />
+            </div>
+            <div className="Button-filter">
+              <h3>Suitable for newborn </h3>
+              <input
+                type="button"
+                id="4"
+                name="yes"
+                className={this.buttonColorHandler("4", "yes")}
+                value="yes"
+                onClick={this.buttonClickHandler}
+              />
+              <input
+                type="button"
+                id="5"
+                className={this.buttonColorHandler("5", "no")}
+                name="no"
+                value="no"
+                onClick={this.buttonClickHandler}
+              />
+            </div>
           </div>
-          <div className="Weigth-filter">
-            <h3>Maximum weight: {this.state.filter[3]}kg</h3>
-            <input
-              type="range"
-              min="5"
-              max="20"
-              value={this.state.filter[3]}
-              className="slider"
-              id="myRange"
-              onChange={this.sliderChangeHandler}
-            />
-          </div>
-          <div className="Button-filter">
-            <h3>Suitable for newborn </h3>
-            <input
-              type="button"
-              id="4"
-              name="yes"
-              className={this.buttonColorHandler("4", "yes")}
-              value="yes"
-              onClick={this.buttonClickHandler}
-            />
-            <input
-              type="button"
-              id="5"
-              className={this.buttonColorHandler("5", "no")}
-              name="no"
-              value="no"
-              onClick={this.buttonClickHandler}
-            />
-          </div>
+          <input
+            id="Sidebar-controller"
+            type="button"
+            onClick={this.handleSideBar}
+            value="<"
+          />
         </div>
       );
     } else {
-      return(
+      return (
         <div>
-          <input type="button" onClick={this.handleSideBar}/>
-        </div>
-      )
+          <input
+            id="Sidebar-controller"
+            type="button"
+            onClick={this.handleSideBar}
+            value=">"
+          />
 
+        </div>
+      );
     }
   };
 
   handleSideBar = () => {
     this.setState({
-      sideBar: !this.state.sideBar
-    })
-    console.log(this.state.sideBar)
-  }
+      sideBar: !this.state.sideBar,
+    });
+    console.log(this.state.sideBar);
+  };
 
   render() {
     return (
