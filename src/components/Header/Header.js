@@ -6,10 +6,9 @@ class Header extends Component {
   render() {
     return (
       <div className="Header-container">
-        <img src="../../../logo-2.png" alt="logo"></img>
-        <p>Your baby, your criteria!</p>
+        <div className="Logo">Roll Baby Roll</div>
         <div className="Menu">
-        <Link className="Link" to="/"> Home</Link>
+          <Link className="Link" to="/"> Home</Link>
           <Link className="Link" to="/add"> Add</Link>
           <Link className="Link" to="/update"> Update</Link>
         </div>

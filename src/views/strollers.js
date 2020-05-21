@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 export default class Strollers extends Component {
   state = {
+    sideBar: true,
     allStrollers: [],
     filteredStrollers: [],
     filter: [null, null, null, 20, null, null],
@@ -46,7 +47,7 @@ export default class Strollers extends Component {
   };
 
   filter = () => {
-    let { allStrollers, filter } = this.state;
+    const { allStrollers, filter } = this.state;
     let priceResult,
       birthResult,
       weightResult,
@@ -124,7 +125,6 @@ export default class Strollers extends Component {
       return (
         <div className="No-results">
           <div>No Results :-( </div>
-          <div>Try changing the filters !</div>
         </div>
       );
     } else {
@@ -156,11 +156,13 @@ export default class Strollers extends Component {
     }
   };
 
-  render() {
-    return (
-      <div className="App-header">
+  renderFilters = () => {
+    const sideBar = this.state.sideBar
+    if (sideBar === true) {
+      return (
         <div className="Filter-container">
-          <div className="Price-filter">
+           <input type="button" onClick={this.handleSideBar}/>
+          <div className="Button-filter">
             <h3>Price Range:</h3>
             <input
               type="button"
@@ -199,7 +201,7 @@ export default class Strollers extends Component {
               onChange={this.sliderChangeHandler}
             />
           </div>
-          <div className="Price-filter">
+          <div className="Button-filter">
             <h3>Suitable for newborn </h3>
             <input
               type="button"
@@ -219,6 +221,28 @@ export default class Strollers extends Component {
             />
           </div>
         </div>
+      );
+    } else {
+      return(
+        <div>
+          <input type="button" onClick={this.handleSideBar}/>
+        </div>
+      )
+
+    }
+  };
+
+  handleSideBar = () => {
+    this.setState({
+      sideBar: !this.state.sideBar
+    })
+    console.log(this.state.sideBar)
+  }
+
+  render() {
+    return (
+      <div className="App-header">
+        {this.renderFilters()}
         <div className="Stroller-container">
           <div className="labels">
             <div className="Stroller-img"></div>

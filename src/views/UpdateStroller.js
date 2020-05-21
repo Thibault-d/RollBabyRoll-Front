@@ -48,24 +48,28 @@ export default class UpdateStroller extends Component {
     if (selectedStroller !== undefined) {
       let updateForm = Object.entries(selectedStroller).map(
         ([key, value], index) => {
-          return (
-            <div key={index}>
-              <label>{key}</label>
-              <input
-              className = "Inputs"
-                type="text"
-                name={key}
-                value={value}
-                onChange={(e) => {
-                  this.setState({
-                    toUpdate: Object.assign(this.state.toUpdate, {
-                      [e.target.name]: e.target.value,
-                    }),
-                  });
-                }}
-              ></input>
-            </div>
-          );
+          if (key !== "_id" && key !== "__v") {
+            return (
+              <div key={index}>
+                <label>{key}</label>
+                <input
+                  className="Inputs"
+                  type="text"
+                  name={key}
+                  value={value}
+                  onChange={(e) => {
+                    this.setState({
+                      toUpdate: Object.assign(this.state.toUpdate, {
+                        [e.target.name]: e.target.value,
+                      }),
+                    });
+                  }}
+                ></input>
+              </div>
+            );
+          } else {
+            return false;
+          }
         }
       );
 
@@ -94,10 +98,13 @@ export default class UpdateStroller extends Component {
           <select onChange={this.strollerToUpdate}>
             {this.generateList()}
           </select>
-          <div className="Form">
-          {this.renderStroller()}
-          </div>
-          <input className="Submit-button" type="submit" value="Update" onClick={this.handleClick} />
+          <div className="Form">{this.renderStroller()}</div>
+          <input
+            className="Submit-button"
+            type="submit"
+            value="Update"
+            onClick={this.handleClick}
+          />
         </div>
       </div>
     );

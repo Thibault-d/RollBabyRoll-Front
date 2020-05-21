@@ -6,7 +6,6 @@ class Detail extends Component {
     stroller: {},
   };
 
-
   loadStrollers = () => {
     let id = this.props.match.params.id.replace(":", "");
     apiClient
@@ -21,19 +20,29 @@ class Detail extends Component {
       });
   };
 
-  
   componentDidMount() {
     this.loadStrollers();
   }
 
   renderStroller = () => {
-      let stroller = this.state.stroller
-
-      let keys = Object.keys(stroller)
-      let values = Object.values(stroller)
-      
-      console.log(keys, values)
-
+    const stroller = this.state.stroller;
+    if (stroller !== undefined) {
+      let strollerToShow = Object.entries(stroller).map(
+        ([key, value], index) => {
+          if (key !== "_id" && key !== "__v") {
+            return (
+              <div key={index}>
+                <div>{key}</div>
+                <div>{value}</div>
+              </div>
+            );
+          } else {
+            return false;
+          }
+        }
+      );
+      return strollerToShow;
+    }
   };
 
   render() {

@@ -103,7 +103,6 @@ export default class addStrollers extends Component {
             type={this.inputType(item)}
             step="0.1"
             name={item}
-            placeholder={item}
             onChange={this.handleChange}
           />
         </div>
