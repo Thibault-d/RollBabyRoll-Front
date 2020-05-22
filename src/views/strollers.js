@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import apiClient from "../services/Strollers.js";
+import Checkbox from "@material-ui/core/Checkbox";
 import { Link } from "react-router-dom";
+import "../styles/homepage/filters-style.css";
+import "../styles/homepage/sidebar-style.css";
 
 export default class Strollers extends Component {
   state = {
@@ -162,32 +165,44 @@ export default class Strollers extends Component {
       return (
         <div className="Sidebar">
           <div className="Filter-container">
-            <div className="Button-filter">
+            <div className="Checkbox-filter">
               <h3>Price Range:</h3>
-              <input
-                type="button"
-                id="0"
-                name="€"
-                className={this.buttonColorHandler("0", "€")}
-                value="€"
-                onClick={this.buttonClickHandler}
-              />
-              <input
-                type="button"
-                id="1"
-                className={this.buttonColorHandler("1", "€€")}
-                name="€€"
-                value="€€"
-                onClick={this.buttonClickHandler}
-              />
-              <input
-                type="button"
-                id="2"
-                className={this.buttonColorHandler("2", "€€€")}
-                name="€€€"
-                value="€€€"
-                onClick={this.buttonClickHandler}
-              />
+              <label className="container">
+                <input
+                  type="checkbox"
+                  id="0"
+                  name="€"
+                  className={this.buttonColorHandler("0", "€")}
+                  value="€"
+                  onClick={this.buttonClickHandler}
+                />
+                <span className="checkmark"></span>
+                <div>€ (400€)</div>
+              </label>
+              <label className="container">
+                <input
+                  type="checkbox"
+                  id="1"
+                  className={this.buttonColorHandler("1", "€€")}
+                  name="€€"
+                  value="€€"
+                  onClick={this.buttonClickHandler}
+                />
+                <span className="checkmark"></span>
+                <div>€€ (400€-800€)</div>
+              </label>
+              <label className="container">
+                <input
+                  type="checkbox"
+                  id="2"
+                  className={this.buttonColorHandler("2", "€€€")}
+                  name="€€€"
+                  value="€€€"
+                  onClick={this.buttonClickHandler}
+                />
+                <span className="checkmark"></span>
+                <div>€€€ (>800€)</div>
+              </label>
             </div>
             <div className="Weigth-filter">
               <h3>Maximum weight: {this.state.filter[3]}kg</h3>
@@ -201,24 +216,32 @@ export default class Strollers extends Component {
                 onChange={this.sliderChangeHandler}
               />
             </div>
-            <div className="Button-filter">
+            <div className="Checkbox-filter">
               <h3>Suitable for newborn </h3>
-              <input
-                type="button"
-                id="4"
-                name="yes"
-                className={this.buttonColorHandler("4", "yes")}
-                value="yes"
-                onClick={this.buttonClickHandler}
-              />
-              <input
-                type="button"
-                id="5"
-                className={this.buttonColorHandler("5", "no")}
-                name="no"
-                value="no"
-                onClick={this.buttonClickHandler}
-              />
+              <label className="container">
+                <input
+                  type="checkbox"
+                  id="4"
+                  name="yes"
+                  className={this.buttonColorHandler("4", "yes")}
+                  value="yes"
+                  onClick={this.buttonClickHandler}
+                />
+                <span className="checkmark"></span>
+                <div>Yes</div>
+              </label>
+              <label className="container">
+                <input
+                  type="checkbox"
+                  id="5"
+                  className={this.buttonColorHandler("5", "no")}
+                  name="no"
+                  value="no"
+                  onClick={this.buttonClickHandler}
+                />
+                <span className="checkmark"></span>
+                <div>No</div>
+              </label>
             </div>
           </div>
           <input
@@ -238,7 +261,6 @@ export default class Strollers extends Component {
             onClick={this.handleSideBar}
             value=">"
           />
-
         </div>
       );
     }
