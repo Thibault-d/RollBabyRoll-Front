@@ -6,37 +6,39 @@ body {
 
 .App-header {
   display: flex;
+
 }
 
 .No-results {
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-left: 300px;
   font-size: 1.5em;
-  width: 100%;
 }
 
 .Sidebar {
   display: flex;
   flex-direction: row;
   width: 17%;
-  height: 93vh;
+  border-right:solid 1px lightgrey ;
   justify-content: space-between;
-  border: solid pink;
   align-content: center;
+  height: 92vh;
 }
 
 #Sidebar-controller {
   width: 40px;
   height: 50px;
+  color:white;
   background-color: black;
   border:none;
-  color:white;
 }
 
 .Filter-container {
+
   padding-left:20px;
   display: flex;
   flex-direction: column;
@@ -47,7 +49,6 @@ body {
   margin-top: 100px;
   display: flex;
   flex-direction: row;
-  height: 93vh;
 }
 
 .labels {
