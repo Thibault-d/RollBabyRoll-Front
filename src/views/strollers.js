@@ -9,21 +9,30 @@ export default class Strollers extends Component {
     sideBar: true,
     allStrollers: [],
     filteredStrollers: [],
+    numberOfPages: false,
+    loadStatus: false,
+    filterState: false,
     filter: [
       { Field: "pricerange", Values: [] },
       { Field: "birth", Values: [] },
     ],
     weigth: false,
-    numberOfPages: undefined,
   };
 
   loadStrollers() {
+    const { loadStatus } = this.state;
+    this.setState({ loadStatus: true });
     apiClient
       .getAllStrollers()
       .then(({ data }) => {
-        this.setState({
-          allStrollers: data,
-        });
+        this.setState(
+          {
+            allStrollers: data,
+          },
+          () => {
+            this.setState({ loadStatus: false });
+          }
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -53,7 +62,7 @@ export default class Strollers extends Component {
   };
 
   filter = () => {
-    const { allStrollers, filter, weigth } = this.state;
+    const { allStrollers, filter, weigth, filterState } = this.state;
     let filterUsed = [];
     filter.map((item, index) => {
       item.Values.length > 0 ? filterUsed.push(item) : console.log();
@@ -66,32 +75,55 @@ export default class Strollers extends Component {
       });
     };
     let filtered = allStrollers.flexFilter(filterUsed);
-    if(weigth){
-      filtered = filtered.filter((stroller) => stroller.weight <= weigth)
-    } else{}
+    if (weigth) {
+      filtered = filtered.filter((stroller) => stroller.weight <= weigth);
+    } else {
+    }
     this.setState({
-      filteredStrollers: filtered
-    })
-    
+      filteredStrollers: filtered,
+    });
+    if (
+      filter[0].Values.length > 0 ||
+      filter[1].Values.length > 0 ||
+      weigth !== false
+    ) {
+      this.setState({ filterState: true });
+    } else {
+      this.setState({ filterState: false });
+    }
   };
 
   sliderChangeHandler = (e) => {
-    this.state.weigth = e.target.value;
-    this.forceUpdate();
-    this.filter();
+    this.setState(
+      {
+        weigth: e.target.value,
+      },
+      () => this.filter()
+    );
+  };
+
+  toDisplay = () => {
+    let { allStrollers, filteredStrollers, filterState } = this.state;
+    let listToDisplay = filteredStrollers;
+    let filtered = filteredStrollers.length;
+    if (filtered > 0) {
+      return filteredStrollers;
+    } else {
+      return allStrollers;
+    }
+    return filteredStrollers;
   };
 
   renderStrollers = () => {
-    let listToDisplay = [];
-    let { allStrollers, filteredStrollers } = this.state;
-    filteredStrollers
-      ? (listToDisplay = filteredStrollers)
-      : (listToDisplay = allStrollers);
+    let { allStrollers, filteredStrollers, filterState } = this.state;
+    let filtered = filteredStrollers.length;
 
-    if (filteredStrollers.length === 0) {
+    let listToDisplay = this.toDisplay();
+
+    if (filtered === 0 && filterState) {
       return (
         <div className="No-results">
-          <div>No Results :-( </div>
+          <div>No Results matching your criteria</div>
         </div>
       );
     } else {
@@ -124,7 +156,7 @@ export default class Strollers extends Component {
   };
 
   calculatePages = () => {
-    const { filteredStrollers, allStrollers, numberOfPages } = this.state;
+    const { filteredStrollers, allStrollers } = this.state;
     let arrayToPaginate = [];
     let nbPages = 0;
     filteredStrollers
@@ -137,7 +169,7 @@ export default class Strollers extends Component {
   };
 
   paginationMenu = () => {
-    const { filteredStrollers, allStrollers, numberOfPages } = this.state;
+    const { numberOfPages } = this.state;
     let test = [];
     for (let i = 0; i <= numberOfPages; i++) {
       test.push(i);
