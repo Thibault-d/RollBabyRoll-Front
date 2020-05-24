@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import apiClient from "../services/Strollers.js";
-import Checkbox from "@material-ui/core/Checkbox";
 import { Link } from "react-router-dom";
-import "../styles/homepage/filters-style.css";
-import "../styles/homepage/sidebar-style.css";
+import "../styles/homepage/filters.css";
+import "../styles/homepage/sidebar.css";
 
 export default class Strollers extends Component {
   state = {
     sideBar: true,
     allStrollers: [],
     filteredStrollers: [],
-    filter: [null, null, null, 20, null, null],
+    filter: [
+      { Field: "pricerange", Values: [] },
+      { Field: "birth", Values: [] },
+    ],
+    weigth: false,
+    numberOfPages: undefined,
   };
 
   loadStrollers() {
@@ -28,92 +32,52 @@ export default class Strollers extends Component {
 
   componentDidMount() {
     this.loadStrollers();
+    this.calculatePages();
   }
 
   buttonClickHandler = (e) => {
-    let { id, name } = e.target;
-    let buttonStatus = this.state.filter;
-    buttonStatus[id] === name
-      ? (buttonStatus[id] = null)
-      : (buttonStatus[id] = name);
-
-    this.filter();
-  };
-
-  buttonColorHandler = (id, name) => {
-    let string = "";
-    let buttonStatus = this.state.filter;
-    buttonStatus[id] === name
-      ? (string = "ActiveButton")
-      : (string = "InactiveButton");
-    return string;
-  };
-
-  filter = () => {
-    const { allStrollers, filter } = this.state;
-    let priceResult,
-      birthResult,
-      weightResult,
-      activeFilters,
-      concatResult = [];
-
-    let counts = {};
-
-    let priceFilter = filter.slice(0, 3);
-    let priceFilterStatus = priceFilter.some((el) => el !== null) ? 1 : 0;
-
-    let weightFilter = filter[3];
-    let weightFilterStatus = weightFilter !== 20 ? 1 : 0;
-
-    let birthFilter = filter.slice(4, 6);
-    let birthFilterStatus = birthFilter.some((el) => el !== null) ? 1 : 0;
-    let idResult = [];
-    let test = [];
-    activeFilters =
-      priceFilterStatus +
-      weightFilterStatus +
-      birthFilterStatus; /* counting number of active filters */
-
-    priceResult = priceFilter.map((item, index) =>
-      allStrollers.filter((item) => item.pricerange === priceFilter[index])
-    );
-
-    weightResult = allStrollers.filter((item) => item.weight <= weightFilter);
-
-    birthResult = birthFilter.map((item, index) =>
-      allStrollers.filter((item) => item.birth === birthFilter[index])
-    );
-
-    concatResult = concatResult.concat(
-      priceResult.flat(),
-      weightResult,
-      birthResult.flat()
-    ); /*joining all filter results */
-    idResult = concatResult.map((item, index) => (idResult[index] = item._id));
-
-    for (let i = 0; i < idResult.length; i++) {
-      let num = idResult[i];
-      counts[num] = counts[num] ? counts[num] + 1 : 1;
-    }
-
-    Object.keys(counts).forEach((key) => {
-      if (counts[key] === activeFilters) {
-        test.push(key);
+    let { name, value } = e.target;
+    let { filter } = this.state;
+    filter.map((item, index) => {
+      if (item.Field === name) {
+        if (item.Values.includes(value)) {
+          let ind = item.Values.indexOf(value);
+          item.Values.splice(ind, 1);
+        } else {
+          item.Values.push(value);
+        }
       } else {
       }
     });
+    this.filter();
+  };
 
-    this.setState({
-      filteredStrollers: test
-        .map((item, index) =>
-          allStrollers.filter((item) => item._id === test[index])
-        )
-        .flat(),
+  filter = () => {
+    const { allStrollers, filter, weigth } = this.state;
+    let filterUsed = [];
+    filter.map((item, index) => {
+      item.Values.length > 0 ? filterUsed.push(item) : console.log();
     });
+    Array.prototype.flexFilter = function (info) {
+      return this.filter((item) => {
+        return info.every((i) => {
+          return i.Values.indexOf(item[i.Field]) > -1;
+        });
+      });
+    };
+    let filtered = allStrollers.flexFilter(filterUsed);
+    if(weigth){
+      filtered = filtered.filter((stroller) => stroller.weight <= weigth)
+    } else{}
+    this.setState({
+      filteredStrollers: filtered
+    })
+    
   };
 
   sliderChangeHandler = (e) => {
-    this.state.filter[3] = e.target.value;
+    this.state.weigth = e.target.value;
+    this.forceUpdate();
     this.filter();
   };
 
@@ -159,6 +123,34 @@ export default class Strollers extends Component {
     }
   };
 
+  calculatePages = () => {
+    const { filteredStrollers, allStrollers, numberOfPages } = this.state;
+    let arrayToPaginate = [];
+    let nbPages = 0;
+    filteredStrollers
+      ? (arrayToPaginate = filteredStrollers)
+      : (arrayToPaginate = allStrollers);
+    nbPages = Math.ceil(arrayToPaginate.length / 5);
+    this.setState({
+      numberOfPages: nbPages,
+    });
+  };
+
+  paginationMenu = () => {
+    const { filteredStrollers, allStrollers, numberOfPages } = this.state;
+    let test = [];
+    for (let i = 0; i <= numberOfPages; i++) {
+      test.push(i);
+    }
+    return test.map((index, item) => {
+      return (
+        <div key={index}>
+          <input type="button" value={item} />{" "}
+        </div>
+      );
+    });
+  };
+
   renderFilters = () => {
     const sideBar = this.state.sideBar;
     if (sideBar === true) {
@@ -170,9 +162,7 @@ export default class Strollers extends Component {
               <label className="container">
                 <input
                   type="checkbox"
-                  id="0"
-                  name="€"
-                  className={this.buttonColorHandler("0", "€")}
+                  name="pricerange"
                   value="€"
                   onClick={this.buttonClickHandler}
                 />
@@ -182,9 +172,7 @@ export default class Strollers extends Component {
               <label className="container">
                 <input
                   type="checkbox"
-                  id="1"
-                  className={this.buttonColorHandler("1", "€€")}
-                  name="€€"
+                  name="pricerange"
                   value="€€"
                   onClick={this.buttonClickHandler}
                 />
@@ -194,9 +182,7 @@ export default class Strollers extends Component {
               <label className="container">
                 <input
                   type="checkbox"
-                  id="2"
-                  className={this.buttonColorHandler("2", "€€€")}
-                  name="€€€"
+                  name="pricerange"
                   value="€€€"
                   onClick={this.buttonClickHandler}
                 />
@@ -205,12 +191,12 @@ export default class Strollers extends Component {
               </label>
             </div>
             <div className="Weigth-filter">
-              <h3>Maximum weight: {this.state.filter[3]}kg</h3>
+              <h3>Maximum weight: {this.state.weigth}kg</h3>
               <input
                 type="range"
                 min="5"
                 max="20"
-                value={this.state.filter[3]}
+                value={this.state.weigth}
                 className="slider"
                 id="myRange"
                 onChange={this.sliderChangeHandler}
@@ -221,9 +207,7 @@ export default class Strollers extends Component {
               <label className="container">
                 <input
                   type="checkbox"
-                  id="4"
-                  name="yes"
-                  className={this.buttonColorHandler("4", "yes")}
+                  name="birth"
                   value="yes"
                   onClick={this.buttonClickHandler}
                 />
@@ -233,9 +217,7 @@ export default class Strollers extends Component {
               <label className="container">
                 <input
                   type="checkbox"
-                  id="5"
-                  className={this.buttonColorHandler("5", "no")}
-                  name="no"
+                  name="birth"
                   value="no"
                   onClick={this.buttonClickHandler}
                 />
@@ -270,7 +252,6 @@ export default class Strollers extends Component {
     this.setState({
       sideBar: !this.state.sideBar,
     });
-    console.log(this.state.sideBar);
   };
 
   render() {
@@ -278,6 +259,7 @@ export default class Strollers extends Component {
       <div className="App-header">
         {this.renderFilters()}
         <div className="Stroller-container">
+          {this.paginationMenu()}
           <div className="labels">
             <div className="Stroller-img"></div>
             <div>Model</div>
