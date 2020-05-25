@@ -10,6 +10,7 @@ export default class Strollers extends Component {
     allStrollers: [],
     filteredStrollers: [],
     numberOfPages: false,
+    currentPage: false,
     loadStatus: false,
     filterState: false,
     filter: [
@@ -28,9 +29,11 @@ export default class Strollers extends Component {
         this.setState(
           {
             allStrollers: data,
+            filteredStrollers: data,
           },
           () => {
             this.setState({ loadStatus: false });
+            this.calculatePages();
           }
         );
       })
@@ -41,7 +44,6 @@ export default class Strollers extends Component {
 
   componentDidMount() {
     this.loadStrollers();
-    this.calculatePages();
   }
 
   buttonClickHandler = (e) => {
@@ -51,11 +53,12 @@ export default class Strollers extends Component {
       if (item.Field === name) {
         if (item.Values.includes(value)) {
           let ind = item.Values.indexOf(value);
-          item.Values.splice(ind, 1);
+          return item.Values.splice(ind, 1);
         } else {
-          item.Values.push(value);
+          return item.Values.push(value);
         }
       } else {
+        return false;
       }
     });
     this.filter();
@@ -79,9 +82,14 @@ export default class Strollers extends Component {
       filtered = filtered.filter((stroller) => stroller.weight <= weigth);
     } else {
     }
-    this.setState({
-      filteredStrollers: filtered,
-    });
+    this.setState(
+      {
+        filteredStrollers: filtered,
+      },
+      () => {
+        this.calculatePages();
+      }
+    );
     if (
       filter[0].Values.length > 0 ||
       filter[1].Values.length > 0 ||
@@ -102,85 +110,41 @@ export default class Strollers extends Component {
     );
   };
 
-  toDisplay = () => {
-    let { allStrollers, filteredStrollers, filterState } = this.state;
-    let listToDisplay = filteredStrollers;
-    let filtered = filteredStrollers.length;
-    if (filtered > 0) {
-      return filteredStrollers;
-    } else {
-      return allStrollers;
-    }
-    return filteredStrollers;
-  };
-
-  renderStrollers = () => {
-    let { allStrollers, filteredStrollers, filterState } = this.state;
-    let filtered = filteredStrollers.length;
-
-    let listToDisplay = this.toDisplay();
-
-    if (filtered === 0 && filterState) {
-      return (
-        <div className="No-results">
-          <div>No Results matching your criteria</div>
-        </div>
-      );
-    } else {
-      return listToDisplay.map((item, index) => {
-        return (
-          <div key={index} className="Stroller-column">
-            <img
-              className="Stroller-img"
-              src={item.image}
-              alt={item.name}
-            ></img>
-            <div>{item.name}</div>
-            <div>{item.brand} </div>
-            <div>{item.weight} kg</div>
-            <div>{item.pricerange}</div>
-            <div>{item.birth}</div>
-            <div>{item.maxweight} kg</div>
-            <div>{item.handle}</div>
-            <div>{item.sport}</div>
-            <div>{item.allterrain}</div>
-            <div>{item.airline}</div>
-            <div>{item.double}</div>
-            <Link to={`/detail:${item._id}`}>
-              <input type="button" value="More details" />
-            </Link>
-          </div>
-        );
-      });
-    }
-  };
-
   calculatePages = () => {
-    const { filteredStrollers, allStrollers } = this.state;
-    let arrayToPaginate = [];
-    let nbPages = 0;
-    filteredStrollers
-      ? (arrayToPaginate = filteredStrollers)
-      : (arrayToPaginate = allStrollers);
-    nbPages = Math.ceil(arrayToPaginate.length / 5);
-    this.setState({
-      numberOfPages: nbPages,
-    });
+    const { filteredStrollers } = this.state;
+    let nbPages,
+      currentPage = false;
+    nbPages = Math.ceil(filteredStrollers.length / 5);
+    nbPages > 0 ? (currentPage = 1) : (currentPage = false);
+    this.setState(
+      {
+        numberOfPages: nbPages,
+        currentPage: currentPage,
+      },
+      () => this.paginationMenu()
+    );
   };
 
   paginationMenu = () => {
     const { numberOfPages } = this.state;
     let test = [];
-    for (let i = 0; i <= numberOfPages; i++) {
-      test.push(i);
-    }
-    return test.map((index, item) => {
-      return (
-        <div key={index}>
-          <input type="button" value={item} />{" "}
+    for (let i = 1; i <= numberOfPages; i++) {
+      let a = (
+        <div key={i}>
+          <input type="button" value={i} onClick={this.pageClickHandler} />
         </div>
       );
+      test.push(a);
+    }
+    return test.map((item, index) => {
+      return item;
     });
+  };
+
+  pageClickHandler = (e) => {
+    this.setState({ currentPage: Number(e.target.value) }, () =>
+      this.paginated()
+    );
   };
 
   renderFilters = () => {
@@ -284,6 +248,56 @@ export default class Strollers extends Component {
     this.setState({
       sideBar: !this.state.sideBar,
     });
+  };
+
+  paginated = () => {
+    let { filteredStrollers, numberOfPages, currentPage } = this.state;
+    let sliceIndex = [];
+    if (currentPage === 1) {
+      sliceIndex = [0, 4];
+    } else if (currentPage === 2) {
+      sliceIndex = [4, 9];
+    }
+    return sliceIndex
+  };
+
+  renderStrollers = () => {
+    let {filteredStrollers,numberOfPages,currentPage,filterState} = this.state;
+    let start = this.paginated()[0]
+    let end = this.paginated()[1]
+    if (numberOfPages === 0 && filterState) {
+      return (
+        <div className="No-results">
+          <div>No Results matching your criteria</div>
+        </div>
+      );
+    } else {
+      return filteredStrollers.slice(start,end).map((item, index) => {
+        return (
+          <div key={index} className="Stroller-column">
+            <img
+              className="Stroller-img"
+              src={item.image}
+              alt={item.name}
+            ></img>
+            <div>{item.name}</div>
+            <div>{item.brand} </div>
+            <div>{item.weight} kg</div>
+            <div>{item.pricerange}</div>
+            <div>{item.birth}</div>
+            <div>{item.maxweight} kg</div>
+            <div>{item.handle}</div>
+            <div>{item.sport}</div>
+            <div>{item.allterrain}</div>
+            <div>{item.airline}</div>
+            <div>{item.double}</div>
+            <Link to={`/detail:${item._id}`}>
+              <input type="button" value="More details" />
+            </Link>
+          </div>
+        );
+      });
+    }
   };
 
   render() {
