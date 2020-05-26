@@ -1,0 +1,23 @@
+.Pagination-menu {
+    border: solid blue 1px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.Active-button {
+    border:solid 1px white;
+    background-color: #2196F3;
+    border-radius: 10%;
+    color:white;
+    width: 30px;
+    height: 30px;
+}
+
+.Inactive-button {
+    border-radius: 10%;
+    border:solid 1px white;
+    width: 30px;
+    height: 30px;
+}

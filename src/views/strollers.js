@@ -3,6 +3,8 @@ import apiClient from "../services/Strollers.js";
 import { Link } from "react-router-dom";
 import "../styles/homepage/filters.css";
 import "../styles/homepage/sidebar.css";
+import "../styles/homepage/pagination.css";
+import "../styles/homepage/strollers.css";
 
 export default class Strollers extends Component {
   state = {
@@ -125,13 +127,26 @@ export default class Strollers extends Component {
     );
   };
 
+  handleSideBar = () => {
+    this.setState({
+      sideBar: !this.state.sideBar,
+    });
+  };
+
   paginationMenu = () => {
     const { numberOfPages } = this.state;
     let test = [];
     for (let i = 1; i <= numberOfPages; i++) {
       let a = (
         <div key={i}>
-          <input type="button" value={i} onClick={this.pageClickHandler} />
+          <input
+            type="button"
+            className={
+              this.state.currentPage === i ? "Active-button" : "Inactive-button"
+            }
+            value={i}
+            onClick={this.pageClickHandler}
+          />
         </div>
       );
       test.push(a);
@@ -139,6 +154,10 @@ export default class Strollers extends Component {
     return test.map((item, index) => {
       return item;
     });
+  };
+
+  pageButtonStatus = (e) => {
+    console.log(e);
   };
 
   pageClickHandler = (e) => {
@@ -244,12 +263,6 @@ export default class Strollers extends Component {
     }
   };
 
-  handleSideBar = () => {
-    this.setState({
-      sideBar: !this.state.sideBar,
-    });
-  };
-
   paginated = () => {
     let { filteredStrollers, numberOfPages, currentPage } = this.state;
     let sliceIndex = [];
@@ -258,13 +271,18 @@ export default class Strollers extends Component {
     } else if (currentPage === 2) {
       sliceIndex = [4, 9];
     }
-    return sliceIndex
+    return sliceIndex;
   };
 
   renderStrollers = () => {
-    let {filteredStrollers,numberOfPages,currentPage,filterState} = this.state;
-    let start = this.paginated()[0]
-    let end = this.paginated()[1]
+    let {
+      filteredStrollers,
+      numberOfPages,
+      currentPage,
+      filterState,
+    } = this.state;
+    let start = this.paginated()[0];
+    let end = this.paginated()[1];
     if (numberOfPages === 0 && filterState) {
       return (
         <div className="No-results">
@@ -272,9 +290,9 @@ export default class Strollers extends Component {
         </div>
       );
     } else {
-      return filteredStrollers.slice(start,end).map((item, index) => {
+      return filteredStrollers.slice(start, end).map((item, index) => {
         return (
-          <div key={index} className="Stroller-column">
+          <div key={index} className="Stroller-card">
             <img
               className="Stroller-img"
               src={item.image}
@@ -304,23 +322,25 @@ export default class Strollers extends Component {
     return (
       <div className="App-header">
         {this.renderFilters()}
-        <div className="Stroller-container">
-          {this.paginationMenu()}
-          <div className="labels">
-            <div className="Stroller-img"></div>
-            <div>Model</div>
-            <div>Brand </div>
-            <div>Weight </div>
-            <div>Price range</div>
-            <div>Suitable for newborn</div>
-            <div>Maximum Weight </div>
-            <div>Handle</div>
-            <div>Ok for sport </div>
-            <div>All terrain</div>
-            <div>Carry-on in plane</div>
-            <div>Double </div>
+        <div className="Pagination-stroller-container">
+          <div className="Pagination-menu">{this.paginationMenu()}</div>
+          <div className="Stroller-container">
+            <div className="labels">
+              <div className="Stroller-img"></div>
+              <div>Model</div>
+              <div>Brand </div>
+              <div>Weight </div>
+              <div>Price range</div>
+              <div>Suitable for newborn</div>
+              <div>Maximum Weight </div>
+              <div>Handle</div>
+              <div>Ok for sport </div>
+              <div>All terrain</div>
+              <div>Carry-on in plane</div>
+              <div>Double </div>
+            </div>
+            {this.renderStrollers()}
           </div>
-          {this.renderStrollers()}
         </div>
       </div>
     );
