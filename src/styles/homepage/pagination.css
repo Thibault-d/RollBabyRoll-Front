@@ -1,9 +1,25 @@
+
+@media only screen and (min-width: 1100px) {
 .Pagination-menu {
-    border: solid blue 1px;
+    width: 1000px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+
+}
+
+@media only screen and (max-width: 1100px) {
+    .Pagination-menu {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 50px;
+    }
 }
 
 .Active-button {

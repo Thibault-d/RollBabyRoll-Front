@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import apiClient from "../services/Strollers.js";
+import "../styles/update/update.css";
 
 export default class UpdateStroller extends Component {
   state = {

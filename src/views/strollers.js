@@ -135,7 +135,7 @@ export default class Strollers extends Component {
 
   paginationMenu = () => {
     const { numberOfPages } = this.state;
-    let test = [];
+    let pagesArray = [];
     for (let i = 1; i <= numberOfPages; i++) {
       let a = (
         <div key={i}>
@@ -149,11 +149,15 @@ export default class Strollers extends Component {
           />
         </div>
       );
-      test.push(a);
+      pagesArray.push(a);
     }
-    return test.map((item, index) => {
-      return item;
-    });
+    if (pagesArray.length > 1) {
+      return pagesArray.map((item, index) => {
+        return item;
+      });
+    } else {
+      return <div className="Inactive-button"></div>;
+    }
   };
 
   pageButtonStatus = (e) => {
@@ -182,7 +186,9 @@ export default class Strollers extends Component {
                   onClick={this.buttonClickHandler}
                 />
                 <span className="checkmark"></span>
-                <div>€ (400€)</div>
+                <div>
+                  € <span>(400€)</span>
+                </div>
               </label>
               <label className="container">
                 <input
@@ -192,7 +198,9 @@ export default class Strollers extends Component {
                   onClick={this.buttonClickHandler}
                 />
                 <span className="checkmark"></span>
-                <div>€€ (400€-800€)</div>
+                <div>
+                  €€ <span>(400€-800€)</span>
+                </div>
               </label>
               <label className="container">
                 <input
@@ -202,11 +210,13 @@ export default class Strollers extends Component {
                   onClick={this.buttonClickHandler}
                 />
                 <span className="checkmark"></span>
-                <div>€€€ (>800€)</div>
+                <div>
+                  €€€ <span>(>800€)</span>
+                </div>
               </label>
             </div>
             <div className="Weigth-filter">
-              <h3>Maximum weight: {this.state.weigth}kg</h3>
+              <h3>Max weight: {this.state.weigth}kg</h3>
               <input
                 type="range"
                 min="5"
@@ -292,7 +302,7 @@ export default class Strollers extends Component {
     } else {
       return filteredStrollers.slice(start, end).map((item, index) => {
         return (
-          <div key={index} className="Stroller-card">
+          <div key={index}className="Stroller-card">
             <img
               className="Stroller-img"
               src={item.image}
@@ -300,15 +310,17 @@ export default class Strollers extends Component {
             ></img>
             <div>{item.name}</div>
             <div>{item.brand} </div>
-            <div>{item.weight} kg</div>
-            <div>{item.pricerange}</div>
-            <div>{item.birth}</div>
-            <div>{item.maxweight} kg</div>
-            <div>{item.handle}</div>
-            <div>{item.sport}</div>
-            <div>{item.allterrain}</div>
-            <div>{item.airline}</div>
-            <div>{item.double}</div>
+            <section>
+              <div>{item.weight} kg</div>
+              <div>{item.pricerange}</div>
+              <div>{item.birth}</div>
+              <div>{item.maxweight} kg</div>
+              <div>{item.handle}</div>
+              <div>{item.sport}</div>
+              <div>{item.allterrain}</div>
+              <div>{item.airline}</div>
+              <div>{item.double}</div>
+            </section>
             <Link to={`/detail:${item._id}`}>
               <input type="button" value="More details" />
             </Link>
@@ -326,18 +338,19 @@ export default class Strollers extends Component {
           <div className="Pagination-menu">{this.paginationMenu()}</div>
           <div className="Stroller-container">
             <div className="labels">
-              <div className="Stroller-img"></div>
-              <div>Model</div>
-              <div>Brand </div>
-              <div>Weight </div>
-              <div>Price range</div>
-              <div>Suitable for newborn</div>
-              <div>Maximum Weight </div>
-              <div>Handle</div>
-              <div>Ok for sport </div>
-              <div>All terrain</div>
-              <div>Carry-on in plane</div>
-              <div>Double </div>
+              <section>
+                <div>Model</div>
+                <div>Brand </div>
+                <div>Weight </div>
+                <div>Price range</div>
+                <div>Suitable for newborn</div>
+                <div>Maximum Weight </div>
+                <div>Handle</div>
+                <div>Ok for sport </div>
+                <div>All terrain</div>
+                <div>Carry-on in plane</div>
+                <div>Double </div>
+              </section>
             </div>
             {this.renderStrollers()}
           </div>

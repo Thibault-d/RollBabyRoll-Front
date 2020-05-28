@@ -1,8 +1,8 @@
+
+@media only screen and (min-width: 1100px) {
 .App-header {
   display: flex;
-  border: solid red;
   flex-direction: row;
-  
 }
 
 .Pagination-stroller-container {
@@ -20,7 +20,6 @@
 }
 
 .Stroller-container {
-  border: solid 1px red;
   margin-top: 100px;
   display: flex;
   flex-direction: row;
@@ -28,7 +27,7 @@
 
 .labels {
   text-align: right;
-  padding: 15px 15px 15px 15px;
+  padding: 170px 15px 15px 15px;
 }
 
 .Stroller-card {
@@ -66,4 +65,37 @@
 
 .Update {
   margin-top: 50px;
+}}
+
+@media only screen and (max-width: 1100px) {
+  .App-header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .Desktop {
+    font-size: 0em;
+  }
+
+  .Stroller-container {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+
+  .Pagination-stroller-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  section{
+    font-size: 0em;
+  }
+
+  .Stroller-img {
+    height: 100px;
+    width: 100px;
+  }
+
 }
