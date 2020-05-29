@@ -176,45 +176,6 @@ export default class Strollers extends Component {
       return (
         <div className="Sidebar">
           <div className="Filter-container">
-            <div className="Checkbox-filter">
-              <h3>Price Range:</h3>
-              <label className="container">
-                <input
-                  type="checkbox"
-                  name="pricerange"
-                  value="€"
-                  onClick={this.buttonClickHandler}
-                />
-                <span className="checkmark"></span>
-                <div>
-                  € <span>(400€)</span>
-                </div>
-              </label>
-              <label className="container">
-                <input
-                  type="checkbox"
-                  name="pricerange"
-                  value="€€"
-                  onClick={this.buttonClickHandler}
-                />
-                <span className="checkmark"></span>
-                <div>
-                  €€ <span>(400€-800€)</span>
-                </div>
-              </label>
-              <label className="container">
-                <input
-                  type="checkbox"
-                  name="pricerange"
-                  value="€€€"
-                  onClick={this.buttonClickHandler}
-                />
-                <span className="checkmark"></span>
-                <div>
-                  €€€ <span>(>800€)</span>
-                </div>
-              </label>
-            </div>
             <div className="Weigth-filter">
               <h3>Max weight: {this.state.weigth}kg</h3>
               <input
@@ -227,28 +188,70 @@ export default class Strollers extends Component {
                 onChange={this.sliderChangeHandler}
               />
             </div>
-            <div className="Checkbox-filter">
-              <h3>Suitable for newborn </h3>
-              <label className="container">
-                <input
-                  type="checkbox"
-                  name="birth"
-                  value="yes"
-                  onClick={this.buttonClickHandler}
-                />
-                <span className="checkmark"></span>
-                <div>Yes</div>
-              </label>
-              <label className="container">
-                <input
-                  type="checkbox"
-                  name="birth"
-                  value="no"
-                  onClick={this.buttonClickHandler}
-                />
-                <span className="checkmark"></span>
-                <div>No</div>
-              </label>
+            <div className="Checkbox-container">
+              <div className="Checkbox-filter">
+                <h3>Price Range</h3>
+                <label className="container">
+                  <input
+                    type="checkbox"
+                    name="pricerange"
+                    value="€"
+                    onClick={this.buttonClickHandler}
+                  />
+                  <span className="checkmark"></span>
+                  <div>
+                    € <span>(400€)</span>
+                  </div>
+                </label>
+                <label className="container">
+                  <input
+                    type="checkbox"
+                    name="pricerange"
+                    value="€€"
+                    onClick={this.buttonClickHandler}
+                  />
+                  <span className="checkmark"></span>
+                  <div>
+                    €€ <span>(400€-800€)</span>
+                  </div>
+                </label>
+                <label className="container">
+                  <input
+                    type="checkbox"
+                    name="pricerange"
+                    value="€€€"
+                    onClick={this.buttonClickHandler}
+                  />
+                  <span className="checkmark"></span>
+                  <div>
+                    €€€ <span>(>800€)</span>
+                  </div>
+                </label>
+              </div>
+
+              <div className="Checkbox-filter">
+                <h3>Ok for newborn </h3>
+                <label className="container">
+                  <input
+                    type="checkbox"
+                    name="birth"
+                    value="yes"
+                    onClick={this.buttonClickHandler}
+                  />
+                  <span className="checkmark"></span>
+                  <div>Yes</div>
+                </label>
+                <label className="container">
+                  <input
+                    type="checkbox"
+                    name="birth"
+                    value="no"
+                    onClick={this.buttonClickHandler}
+                  />
+                  <span className="checkmark"></span>
+                  <div>No</div>
+                </label>
+              </div>
             </div>
           </div>
           <input
@@ -302,7 +305,7 @@ export default class Strollers extends Component {
     } else {
       return filteredStrollers.slice(start, end).map((item, index) => {
         return (
-          <div key={index}className="Stroller-card">
+          <div key={index} className="Stroller-card">
             <img
               className="Stroller-img"
               src={item.image}
@@ -331,11 +334,19 @@ export default class Strollers extends Component {
   };
 
   render() {
+    const {
+      paginationMenu,
+      filteredStrollers,
+      numberOfPages,
+      currentPage,
+    } = this.state;
     return (
       <div className="App-header">
         {this.renderFilters()}
         <div className="Pagination-stroller-container">
-          <div className="Pagination-menu">{this.paginationMenu()}</div>
+          <div className="Results">
+            {filteredStrollers.length} strollers matching your search
+          </div>
           <div className="Stroller-container">
             <div className="labels">
               <section>
@@ -353,6 +364,16 @@ export default class Strollers extends Component {
               </section>
             </div>
             {this.renderStrollers()}
+          </div>
+          <div className="Pagination-menu">
+            <div>
+              page {currentPage} / {numberOfPages}
+            </div>
+            <div className="Page-buttons">
+            {this.paginationMenu()}
+
+            </div>
+         
           </div>
         </div>
       </div>

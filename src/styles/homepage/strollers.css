@@ -5,10 +5,6 @@
   flex-direction: row;
 }
 
-.Pagination-stroller-container {
-  display: flex;
-  flex-direction: column;
-}
 
 .No-results {
   display: flex;
@@ -23,6 +19,7 @@
   margin-top: 100px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .labels {
@@ -32,6 +29,10 @@
 
 .Stroller-card {
   border: solid 1px white;
+}
+
+.Stroller-card:hover {
+  border: solid 1px blue;
 }
 
 .Stroller-card {
@@ -83,12 +84,6 @@
     justify-content: space-evenly;
   }
 
-
-  .Pagination-stroller-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
   section{
     font-size: 0em;
   }
@@ -98,4 +93,17 @@
     width: 100px;
   }
 
+}
+
+
+.Pagination-stroller-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.Results {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display:flex;
+  justify-content: center;
 }
