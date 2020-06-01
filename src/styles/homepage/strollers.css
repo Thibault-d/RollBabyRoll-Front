@@ -1,10 +1,48 @@
 
+.Pagination-stroller-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.Results {
+  padding-top: 15px;
+  display:flex;
+  justify-content: center;
+}
+
+.Reset-button {
+  outline: none;
+  -webkit-appearance: none;
+  border:solid grey 1px;
+  border-radius: 15px;
+  padding: 5px 0 5px 0 ;
+  transition-duration: 0.1s;
+  background-color: white;
+}
+
+.Reset-button:hover {
+  outline: none;
+  -webkit-appearance: none;
+  border:solid grey 1px;
+  border-radius: 15px;
+  transition-duration: 0.1s;
+  background-color: #2196F3;
+  color:white;
+}
+
+.Reset-button:active {
+  box-shadow: 3px 3px 0px #888888;
+
+}
+
+
+
 @media only screen and (min-width: 1100px) {
 .App-header {
   display: flex;
   flex-direction: row;
 }
-
 
 .No-results {
   display: flex;
@@ -16,10 +54,10 @@
 }
 
 .Stroller-container {
-  margin-top: 100px;
+  margin-top: 80px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .labels {
@@ -32,7 +70,7 @@
 }
 
 .Stroller-card:hover {
-  border: solid 1px blue;
+  border: solid 1px #2196F3;
 }
 
 .Stroller-card {
@@ -73,15 +111,24 @@
     display: flex;
     flex-direction: column;
   }
+  .Stroller-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: solid 1px lightgrey;
+    margin-top: 10px;
+    margin-left: 20px;
+  }
+  
 
   .Desktop {
     font-size: 0em;
   }
 
   .Stroller-container {
+    padding-left: 50px;
     display:flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
   }
 
   section{
@@ -96,14 +143,3 @@
 }
 
 
-.Pagination-stroller-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.Results {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  display:flex;
-  justify-content: center;
-}

@@ -7,6 +7,7 @@ import "../styles/homepage/pagination.css";
 import "../styles/homepage/strollers.css";
 
 export default class Strollers extends Component {
+
   state = {
     sideBar: true,
     allStrollers: [],
@@ -23,7 +24,6 @@ export default class Strollers extends Component {
   };
 
   loadStrollers() {
-    const { loadStatus } = this.state;
     this.setState({ loadStatus: true });
     apiClient
       .getAllStrollers()
@@ -67,7 +67,7 @@ export default class Strollers extends Component {
   };
 
   filter = () => {
-    const { allStrollers, filter, weigth, filterState } = this.state;
+    const { allStrollers, filter, weigth } = this.state;
     let filterUsed = [];
     filter.map((item, index) => {
       item.Values.length > 0 ? filterUsed.push(item) : console.log();
@@ -127,6 +127,27 @@ export default class Strollers extends Component {
     );
   };
 
+  paginated = () => {
+    let {currentPage } = this.state;
+    let sliceIndex = [];
+    if (currentPage === 1) {
+      sliceIndex = [0, 5];
+    } else if (currentPage === 2) {
+      sliceIndex = [5, 10];
+    } else if (currentPage === 3) {
+      sliceIndex = [10, 15];
+    } else if (currentPage === 4) {
+      sliceIndex = [15, 20];
+    }
+    return sliceIndex;
+  };
+
+  pageClickHandler = (e) => {
+    this.setState({ currentPage: Number(e.target.value) }, () =>
+      this.paginated()
+    );
+  };
+
   handleSideBar = () => {
     this.setState({
       sideBar: !this.state.sideBar,
@@ -158,16 +179,6 @@ export default class Strollers extends Component {
     } else {
       return <div className="Inactive-button"></div>;
     }
-  };
-
-  pageButtonStatus = (e) => {
-    console.log(e);
-  };
-
-  pageClickHandler = (e) => {
-    this.setState({ currentPage: Number(e.target.value) }, () =>
-      this.paginated()
-    );
   };
 
   renderFilters = () => {
@@ -253,6 +264,12 @@ export default class Strollers extends Component {
                 </label>
               </div>
             </div>
+            <input
+              className="Reset-button"
+              type="button"
+              value="Reset filters"
+              onClick={this.resetFilters}
+            />
           </div>
           <input
             id="Sidebar-controller"
@@ -276,22 +293,33 @@ export default class Strollers extends Component {
     }
   };
 
-  paginated = () => {
-    let { filteredStrollers, numberOfPages, currentPage } = this.state;
-    let sliceIndex = [];
-    if (currentPage === 1) {
-      sliceIndex = [0, 4];
-    } else if (currentPage === 2) {
-      sliceIndex = [4, 9];
+  resetFilters = () => {
+    var clist = document.getElementsByTagName("input");
+    for (var i = 0; i < clist.length; ++i) {
+      clist[i].checked = false;
     }
-    return sliceIndex;
+    this.setState(
+      {
+        filteredStrollers: [...this.state.allStrollers],
+        filter: [
+          { Field: "pricerange", Values: [] },
+          { Field: "birth", Values: [] },
+        ],
+        weigth: false,
+        filterState: false,
+      },
+      () => {
+        this.calculatePages();
+        this.paginated();
+        this.paginationMenu();
+      }
+    );
   };
 
   renderStrollers = () => {
     let {
       filteredStrollers,
       numberOfPages,
-      currentPage,
       filterState,
     } = this.state;
     let start = this.paginated()[0];
@@ -334,18 +362,14 @@ export default class Strollers extends Component {
   };
 
   render() {
-    const {
-      paginationMenu,
-      filteredStrollers,
-      numberOfPages,
-      currentPage,
-    } = this.state;
+    const {filteredStrollers,numberOfPages,currentPage} = this.state;
+    const {auth} = this.props;
     return (
       <div className="App-header">
         {this.renderFilters()}
         <div className="Pagination-stroller-container">
           <div className="Results">
-            {filteredStrollers.length} strollers matching your search
+            {filteredStrollers.length} results
           </div>
           <div className="Stroller-container">
             <div className="labels">
@@ -369,11 +393,7 @@ export default class Strollers extends Component {
             <div>
               page {currentPage} / {numberOfPages}
             </div>
-            <div className="Page-buttons">
-            {this.paginationMenu()}
-
-            </div>
-         
+            <div className="Page-buttons">{this.paginationMenu()}</div>
           </div>
         </div>
       </div>

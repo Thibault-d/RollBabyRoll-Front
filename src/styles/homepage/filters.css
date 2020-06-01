@@ -38,7 +38,7 @@
   .slider {
     -webkit-appearance: none;
     appearance: none;
-    width: 80%;
+    width: 100%;
     height: 1px;
     border-radius: 5px;
     border: grey solid 1px;
@@ -61,6 +61,10 @@
     height: 25px;
     background-color: #2196F3;
     cursor: pointer;
+  }
+
+  .Reset-button {
+    margin-top: 50px;
   }
 }
 

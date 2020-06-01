@@ -92,6 +92,11 @@ export default class UpdateStroller extends Component {
   };
 
   render() {
+    const {auth} = this.props;
+    if(auth){
+      
+    } else {console.log("pute")}
+
     return (
       <div>
         <div className="Update">

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import apiClient from "../services/Strollers.js";
+import "../styles/addstroller/addstroller.css";
 
 export default class addStrollers extends Component {
   state = {
