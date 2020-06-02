@@ -10,7 +10,7 @@ start with `npm start`
 ## Description
 
 Chosing the best stroller for your baby shouldn't require a PhD.
-Roll Baby Roll is the best Stroller comparator, so you can quickly see and compare what matters for you.
+Roll Baby Roll is the best (and only!) Stroller comparator, so you can quickly see and compare what matters for you.
 
 ## Motivation
 
@@ -20,33 +20,19 @@ For the Front-End, I want to push my experience in React by using multiple filte
 
 Browsing:
 
+Visitor:
 - Browse Strollers
 - Filter Strollers based on several Criterias
-- Rank Strollers based on several Criterias
-- Add / Remove Stroller from comparator
+- Browse comparator from mobile
 - See Stroller detail page
+
+Admin
+- Add / Remove / Update (CRUD) Stroller from comparator
+
 
 ## Functionalities Backlog
 
-Authentication:
-
-- Login
-- Logout
-- Register
-
-DevOps:
-
-- Deploy code online (domain name, hosting service...)
-
-eCommerce:
-
-- Affiliate Links to purchase products
-- Optimize code for SEO
-- Wishlist
-
-Analytics:
-
-- Integrate Google Analytics
+Rank Strollers
 
 ## ROUTES Backend:
 
