@@ -5,7 +5,7 @@
 create `.env` file like the example `.env.sample`
 start with `npm start`
 
-**http://localhost:3001**
+**http://localhost:3000**
 
 ## Description
 
@@ -32,16 +32,16 @@ Admin
 
 ## Functionalities Backlog
 
-Rank Strollers
+- Rank Strollers
 
-## ROUTES Backend:
+
+## Views:
 
 ### Endpoints
 
 | Method | Path       | description                                            |
 | :----: | ---------- | ------------------------------------------------------ |
-|  GET   | `/`        | homepage with all strollers you can filter on          |
-|  GET   | `/compare` | display the Strollers you have selected for comparison |
+|  GET   | `/`        | homepage with the comparator         |
 |  GET   | `/add`     | [ADMIN only] Form to add stroller to DB                |
 |  GET   | `/update`  | [ADMIN only] Select and Update a stroller              |
 |  GET   | `/delete`  | [ADMIN only] select and delete a stroller              |
