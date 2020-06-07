@@ -17,7 +17,7 @@
 .firebaserc
 firebase.json
 /y
-.firebaseConfig
+src/firebaseConfig.js
 
 # misc
 .DS_Store
