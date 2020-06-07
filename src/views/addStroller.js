@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import apiClient from "../services/Strollers.js";
+import "../styles/addstroller/addstroller.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Notification from "../components/Notification"
 
 export default class addStrollers extends Component {
   state = {
@@ -31,7 +35,6 @@ export default class addStrollers extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { history } = this.props;
     const {
       name,
       brand,
@@ -73,9 +76,17 @@ export default class addStrollers extends Component {
         pricerange,
         suspensions,
       })
-      .then((res) => {
-        history.push("/");
-      })
+      .then(
+        toast.success('Stroller added correctly', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          })
+      )
       .catch((err) => {
         console.log(err);
       });
@@ -118,6 +129,7 @@ export default class addStrollers extends Component {
           {this.generateForm()}
           <input className="Submit-button" type="submit" value="Add to Database"/>
         </form>
+        <Notification/>
       </div>
     );
   }

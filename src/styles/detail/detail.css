@@ -1,0 +1,70 @@
+@media only screen and (min-width: 1100px) {
+    .Stroller-detail {
+        margin-top: 50px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .Logo-detail {
+        width: 50px;
+        margin-right: 80px;
+    }
+
+    .Stroller-image {
+        width: 400px;
+    }
+
+    .Main-description {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        border: solid 1px lightgrey;
+        border-radius: 10px;
+        padding: 25px 50px 25px 50px;
+        margin-top: 5px;
+    }
+
+    .Flex-column {
+        display: flex;
+        flex-direction: column;
+        margin-right: 10px;
+    }
+
+
+}
+
+
+
+@media only screen and (max-width: 1100px) {
+    .Stroller-detail {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .Logo-detail {
+        display: flex;
+        width: 50px;
+        margin-right: 50px;
+    }
+
+    .Stroller-image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        width: 300px;
+    }
+
+    .Main-description {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        border: solid 1px lightgrey;
+        border-radius: 10px;
+        padding: 15px 30px 15px 15px;
+        margin-top: 5px;
+    }
+}

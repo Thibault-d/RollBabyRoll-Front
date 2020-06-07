@@ -1,0 +1,19 @@
+.Protected {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+.Protected > img {
+    width: 100px;
+}
+
+.Return-home {
+    text-decoration: none;
+    border:solid 1px pink;
+    padding: 15px 20px 15px 20px;
+    border-radius: 25px;
+    background-color: pink;
+    color:white;
+}
