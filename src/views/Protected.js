@@ -16,9 +16,8 @@ export default class Protected extends Component {
 
         <Switch>
             <Route
-              exact
-              path="/"
-              component={ <Strollers/>}
+              exact path="/"
+              render ={props =><Strollers/> }
             />
           </Switch>
       </div>

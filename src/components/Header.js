@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import * as firebase from 'firebase'
 import "../styles/header/header.css";
 import { Link } from "react-router-dom";
 
@@ -13,6 +12,7 @@ class Header extends Component {
         <Link className="Link" to="/">  Home  </Link>
         <Link className="Link" to="/add">  Add  </Link>
         <Link className="Link" to="/update">   Update   </Link>
+        <Link className="Link" to="/delete">   Delete   </Link>
         <Link className="Link" to="/" onClick={signOut}> Sign Out</Link>
       </div>
     );
@@ -39,4 +39,6 @@ class Header extends Component {
     );
   }
 }
+
+//Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 export default Header;

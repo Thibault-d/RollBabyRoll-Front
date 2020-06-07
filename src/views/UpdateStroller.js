@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import apiClient from "../services/Strollers.js";
+import apiClient from "../services/Strollers";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Notification from "../components/Notification";
 import "../styles/update/update.css";
 
 export default class UpdateStroller extends Component {
@@ -81,24 +84,29 @@ export default class UpdateStroller extends Component {
   };
 
   handleClick = () => {
+    let toUpdate = this.state.toUpdate;
     apiClient
-      .updateStroller(this.state.toUpdate)
-      .then((data) => {
-        console.log("Stroller Updated", data.name);
-      })
+      .updateStroller(toUpdate)
+      .then(
+        toast.success('Update successful', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          })
+      )
       .catch((err) => {
         console.log(err);
       });
   };
 
   render() {
-    const {auth} = this.props;
-    if(auth){
-      
-    } else {console.log("pute")}
-
     return (
       <div>
+        <Notification />
         <div className="Update">
           <h2>Choose a Stroller to update:</h2>
           <select onChange={this.strollerToUpdate}>

@@ -1,116 +1,132 @@
-
-.Pagination-stroller-container {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-}
-
 .Results {
-  padding-top: 15px;
-  display:flex;
+  margin-top: 40px;
+  display: flex;
   justify-content: center;
 }
 
-.Reset-button {
-  outline: none;
-  -webkit-appearance: none;
-  border:solid grey 1px;
+.Found {
+  display: flex;
+  border: solid lightgray 1px;
+  padding: 5px 30px 5px 30px;
   border-radius: 15px;
-  padding: 5px 0 5px 0 ;
-  transition-duration: 0.1s;
-  background-color: white;
+}
+
+.Found>div>img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
 }
 
 .Reset-button:hover {
   outline: none;
   -webkit-appearance: none;
-  border:solid grey 1px;
+  border: solid grey 1px;
   border-radius: 15px;
   transition-duration: 0.1s;
   background-color: #2196F3;
-  color:white;
+  color: white;
 }
 
 .Reset-button:active {
   box-shadow: 3px 3px 0px #888888;
-
 }
-
-
 
 @media only screen and (min-width: 1100px) {
-.App-header {
-  display: flex;
-  flex-direction: row;
-}
+  .App-header {
+    display: flex;
+    flex-direction: row;
+  }
 
-.No-results {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-left: 300px;
-  font-size: 1.5em;
-}
+  .Reset-button {
+    outline: none;
+    -webkit-appearance: none;
+    border: solid grey 1px;
+    border-radius: 15px;
+    padding: 5px 0 5px 0;
+    transition-duration: 0.1s;
+    background-color: white;
+  }
 
-.Stroller-container {
-  margin-top: 80px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-}
+  .Pagination-stroller-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
 
-.labels {
-  text-align: right;
-  padding: 170px 15px 15px 15px;
-}
+  .No-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 230px;
+    font-size: 1.2em;
+  }
 
-.Stroller-card {
-  border: solid 1px white;
-}
+  .No-results>img {
+    width: 400px;
+  }
 
-.Stroller-card:hover {
-  border: solid 1px #2196F3;
-}
+  .Stroller-container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
 
-.Stroller-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: solid 1px lightgrey;
-  padding: 15px 15px 15px 15px;
-  margin-left: 20px;
-}
+  .labels {
+    text-align: right;
+    padding: 170px 15px 15px 15px;
+  }
 
-.Stroller-img {
-  height: 150px;
-  width: 150px;
-}
+  .Stroller-card {
+    border: solid 1px white;
+  }
 
-.Form {
-  width: 30%;
-  text-align: right;
-}
+  .Stroller-card:hover {
+    border: solid 1px #2196F3;
+  }
 
-.Inputs {
-  margin-left: 20px;
-  width: 200px;
-  text-align: center;
-}
+  .Stroller-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px lightgrey;
+    padding: 15px 15px 15px 15px;
+    margin-left: 20px;
+  }
 
-.Submit-button {
-  margin-top: 20px;
-}
+  .Stroller-img {
+    height: 150px;
+    width: 150px;
+  }
 
-.Update {
-  margin-top: 50px;
-}}
+  .Form {
+    width: 30%;
+    text-align: right;
+  }
+
+  .Inputs {
+    margin-left: 20px;
+    width: 200px;
+    text-align: center;
+  }
+
+  .Submit-button {
+    margin-top: 20px;
+  }
+
+  .Update {
+    margin-top: 50px;
+  }
+}
 
 @media only screen and (max-width: 1100px) {
   .App-header {
     display: flex;
     flex-direction: column;
   }
+
   .Stroller-card {
     display: flex;
     flex-direction: column;
@@ -119,19 +135,32 @@
     margin-top: 10px;
     margin-left: 20px;
   }
-  
+
+  .Reset-button {
+    margin-top: 20px;
+    outline: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    -webkit-appearance: none;
+    border: solid grey 1px;
+    border-radius: 15px;
+    padding: 5px 0 5px 0;
+    transition-duration: 0.1s;
+    background-color: white;
+  }
 
   .Desktop {
     font-size: 0em;
   }
 
   .Stroller-container {
-    padding-left: 50px;
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
   }
 
-  section{
+  section {
     font-size: 0em;
   }
 
@@ -140,6 +169,18 @@
     width: 100px;
   }
 
+  .No-results {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.2em;
+  }
+
+  .No-results>img {
+    width: 250px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
 }
-
-

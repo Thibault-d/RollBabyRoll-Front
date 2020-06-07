@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import apiClient from "../services/Strollers";
+import "../styles/detail/detail.css";
 
 class Detail extends Component {
   state = {
-    stroller: {},
+    stroller: undefined,
   };
 
   loadStrollers = () => {
@@ -11,12 +12,13 @@ class Detail extends Component {
     apiClient
       .getOneStroller(id)
       .then((response) => {
-        this.setState({
-          stroller: response.data,
-        });
+        this.setState(
+          {
+            stroller: [response.data],
+          });
       })
       .catch((err) => {
-        console.log(err);
+        console.log("Api call error", err);
       });
   };
 
@@ -27,21 +29,70 @@ class Detail extends Component {
   renderStroller = () => {
     const stroller = this.state.stroller;
     if (stroller !== undefined) {
-      let strollerToShow = Object.entries(stroller).map(
-        ([key, value], index) => {
-          if (key !== "_id" && key !== "__v") {
-            return (
-              <div key={index}>
-                <div>{key}</div>
-                <div>{value}</div>
+      return stroller.map((item, index) => {
+        return (
+          <div key={index} className="Stroller-detail">
+            <img
+              className="Stroller-image"
+              src={item.image}
+              alt={item.name}
+            ></img>
+
+            <div className="Flex-row">
+              <div className="Main-description">
+                <img className="Logo-detail" src="./info.png" alt="info" />
+                <div className="Flex-column">
+                  <div>Brand: </div>
+                  <div>Model: </div>
+                  <div>Price: </div>
+                  <div>Newborn: </div>
+                  <div>Handle: </div>
+                  <div>Double: </div>
+                </div>
+                <div className="Flex-column">
+                  <div>{item.brand}</div>
+                  <div>{item.name}</div>
+                  <div>{item.pricerange}</div>
+                  <div>{item.birth}</div>
+                  <div>{item.handle}</div>
+                  <div>{item.double}</div>
+                </div>
               </div>
-            );
-          } else {
-            return false;
-          }
-        }
-      );
-      return strollerToShow;
+
+              <div className="Main-description">
+                <img className="Logo-detail" src="./exercise.png" alt="info" />
+                <div className="Flex-column">
+                  <div>Weight: </div>
+                  <div>Folded: </div>
+                  <div>Open: </div>
+                  <div>Max weigth: </div>
+                </div>
+                <div className="Flex-column">
+                  <div>{item.weight} kg</div>
+                  <div>{item.dimensionsfolded}</div>
+                  <div>{item.dimensionsopen}</div>
+                  <div>{item.maxweight} kg</div>
+                </div>
+              </div>
+              <div className="Main-description">
+                <img className="Logo-detail" src="./lifestyle.png" alt="info" />
+                <div className="Flex-column">
+                  <div>Airplane: </div>
+                  <div>All terrain: </div>
+                  <div>Sport: </div>
+                  <div>Suspension: </div>
+                </div>
+                <div className="Flex-column">
+                  <div>{item.airline}</div>
+                  <div>{item.allterrain}</div>
+                  <div>{item.sport} </div>
+                  <div>{item.suspensions}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      });
     }
   };
 

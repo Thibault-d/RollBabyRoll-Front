@@ -70,7 +70,7 @@ export default class Strollers extends Component {
     const { allStrollers, filter, weigth } = this.state;
     let filterUsed = [];
     filter.map((item, index) => {
-      item.Values.length > 0 ? filterUsed.push(item) : console.log();
+      return item.Values.length > 0 ? filterUsed.push(item) : console.log();
     });
     Array.prototype.flexFilter = function (info) {
       return this.filter((item) => {
@@ -327,7 +327,8 @@ export default class Strollers extends Component {
     if (numberOfPages === 0 && filterState) {
       return (
         <div className="No-results">
-          <div>No Results matching your criteria</div>
+          <div>Sorry, no results matching your criteria</div>
+          <img alt="noresult" src="./noresult.PNG"/>
         </div>
       );
     } else {
@@ -362,15 +363,16 @@ export default class Strollers extends Component {
   };
 
   render() {
-    const {filteredStrollers,numberOfPages,currentPage} = this.state;
-    const {auth} = this.props;
+    const {filteredStrollers} = this.state;
     return (
       <div className="App-header">
         {this.renderFilters()}
         <div className="Pagination-stroller-container">
           <div className="Results">
-            {filteredStrollers.length} results
-          </div>
+            <div className="Found">
+            <div><img alt="search" src="./search.png"/></div>
+            <div>{filteredStrollers.length} strollers found</div>
+          </div></div>
           <div className="Stroller-container">
             <div className="labels">
               <section>
@@ -390,10 +392,8 @@ export default class Strollers extends Component {
             {this.renderStrollers()}
           </div>
           <div className="Pagination-menu">
-            <div>
-              page {currentPage} / {numberOfPages}
-            </div>
-            <div className="Page-buttons">{this.paginationMenu()}</div>
+          <div className="Page-buttons">{this.paginationMenu()}</div>
+      
           </div>
         </div>
       </div>
