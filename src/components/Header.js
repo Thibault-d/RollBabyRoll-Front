@@ -8,7 +8,7 @@ class Header extends Component {
     const { user, signOut} = this.props;
     return (
       <div className="Menu">
-        <div>Hello, {user.displayName}</div>
+        <div className="User-name">Hello, {user.displayName}</div>
         <Link className="Link" to="/">  Home  </Link>
         <Link className="Link" to="/add">  Add  </Link>
         <Link className="Link" to="/update">   Update   </Link>
@@ -22,6 +22,7 @@ class Header extends Component {
     const  {signInWithGoogle } = this.props;
     return (
       <div className="Menu">
+         <Link className="Link" to="/">  Home  </Link>
         <Link className="Link" to="/" onClick={signInWithGoogle}> Admin Space</Link>
       </div>
     );

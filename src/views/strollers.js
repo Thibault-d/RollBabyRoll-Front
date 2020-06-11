@@ -7,7 +7,6 @@ import "../styles/homepage/pagination.css";
 import "../styles/homepage/strollers.css";
 
 export default class Strollers extends Component {
-
   state = {
     sideBar: true,
     allStrollers: [],
@@ -19,6 +18,8 @@ export default class Strollers extends Component {
     filter: [
       { Field: "pricerange", Values: [] },
       { Field: "birth", Values: [] },
+      { Field: "airline", Values: [] },
+      { Field: "sport", Values: [] },
     ],
     weigth: false,
   };
@@ -90,11 +91,14 @@ export default class Strollers extends Component {
       },
       () => {
         this.calculatePages();
+        this.paginated();
       }
     );
     if (
       filter[0].Values.length > 0 ||
       filter[1].Values.length > 0 ||
+      filter[2].Values.length > 0 ||
+      filter[3].Values.length > 0 ||
       weigth !== false
     ) {
       this.setState({ filterState: true });
@@ -128,7 +132,7 @@ export default class Strollers extends Component {
   };
 
   paginated = () => {
-    let {currentPage } = this.state;
+    let { currentPage } = this.state;
     let sliceIndex = [];
     if (currentPage === 1) {
       sliceIndex = [0, 5];
@@ -188,7 +192,7 @@ export default class Strollers extends Component {
         <div className="Sidebar">
           <div className="Filter-container">
             <div className="Weigth-filter">
-              <h3>Max weight: {this.state.weigth}kg</h3>
+              <h4>Max weight: {this.state.weigth}kg</h4>
               <input
                 type="range"
                 min="5"
@@ -201,7 +205,7 @@ export default class Strollers extends Component {
             </div>
             <div className="Checkbox-container">
               <div className="Checkbox-filter">
-                <h3>Price Range</h3>
+                <h4>Price Range</h4>
                 <label className="container">
                   <input
                     type="checkbox"
@@ -211,7 +215,7 @@ export default class Strollers extends Component {
                   />
                   <span className="checkmark"></span>
                   <div>
-                    € <span>(400€)</span>
+                    € <span>(&lt; 400€)</span>
                   </div>
                 </label>
                 <label className="container">
@@ -241,7 +245,7 @@ export default class Strollers extends Component {
               </div>
 
               <div className="Checkbox-filter">
-                <h3>Ok for newborn </h3>
+                <h4>Ok for newborn </h4>
                 <label className="container">
                   <input
                     type="checkbox"
@@ -263,6 +267,58 @@ export default class Strollers extends Component {
                   <div>No</div>
                 </label>
               </div>
+
+              <div className="Checkbox-filter">
+                <h4>Airplane carry-on?</h4>
+                <label className="container">
+                  <input
+                    type="checkbox"
+                    name="airline"
+                    value="yes"
+                    onClick={this.buttonClickHandler}
+                  />
+                  <span className="checkmark"></span>
+                  <div>Yes</div>
+                </label>
+                <label className="container">
+                  <input
+                    type="checkbox"
+                    name="airline"
+                    value="no"
+                    onClick={this.buttonClickHandler}
+                  />
+                  <span className="checkmark"></span>
+                  <div>No</div>
+                </label>
+              </div>
+
+              
+              <div className="Checkbox-filter">
+                <h4>Ok for sport?</h4>
+                <label className="container">
+                  <input
+                    type="checkbox"
+                    name="sport"
+                    value="yes"
+                    onClick={this.buttonClickHandler}
+                  />
+                  <span className="checkmark"></span>
+                  <div>Yes</div>
+                </label>
+                <label className="container">
+                  <input
+                    type="checkbox"
+                    name="sport"
+                    value="no"
+                    onClick={this.buttonClickHandler}
+                  />
+                  <span className="checkmark"></span>
+                  <div>No</div>
+                </label>
+              </div>
+
+
+
             </div>
             <input
               className="Reset-button"
@@ -304,6 +360,8 @@ export default class Strollers extends Component {
         filter: [
           { Field: "pricerange", Values: [] },
           { Field: "birth", Values: [] },
+          { Field: "airline", Values: [] },
+          { Field: "sport", Values: [] },
         ],
         weigth: false,
         filterState: false,
@@ -317,18 +375,14 @@ export default class Strollers extends Component {
   };
 
   renderStrollers = () => {
-    let {
-      filteredStrollers,
-      numberOfPages,
-      filterState,
-    } = this.state;
+    let { filteredStrollers, numberOfPages, filterState } = this.state;
     let start = this.paginated()[0];
     let end = this.paginated()[1];
     if (numberOfPages === 0 && filterState) {
       return (
         <div className="No-results">
           <div>Sorry, no results matching your criteria</div>
-          <img alt="noresult" src="./noresult.PNG"/>
+          <img alt="noresult" src="./noresult.PNG" />
         </div>
       );
     } else {
@@ -354,7 +408,7 @@ export default class Strollers extends Component {
               <div>{item.double}</div>
             </section>
             <Link to={`/detail:${item._id}`}>
-              <input type="button" value="More details" />
+              <input className="More-details" type="button" value="More details" />
             </Link>
           </div>
         );
@@ -363,16 +417,19 @@ export default class Strollers extends Component {
   };
 
   render() {
-    const {filteredStrollers} = this.state;
+    const { filteredStrollers } = this.state;
     return (
       <div className="App-header">
         {this.renderFilters()}
         <div className="Pagination-stroller-container">
           <div className="Results">
             <div className="Found">
-            <div><img alt="search" src="./search.png"/></div>
-            <div>{filteredStrollers.length} strollers found</div>
-          </div></div>
+              <div>
+                <img alt="search" src="./search.png" />
+              </div>
+              <div>{filteredStrollers.length} strollers found</div>
+            </div>
+          </div>
           <div className="Stroller-container">
             <div className="labels">
               <section>
@@ -392,8 +449,7 @@ export default class Strollers extends Component {
             {this.renderStrollers()}
           </div>
           <div className="Pagination-menu">
-          <div className="Page-buttons">{this.paginationMenu()}</div>
-      
+            <div className="Page-buttons">{this.paginationMenu()}</div>
           </div>
         </div>
       </div>

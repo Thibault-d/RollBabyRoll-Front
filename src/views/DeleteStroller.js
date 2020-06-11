@@ -4,6 +4,7 @@ import "../styles/detail/detail.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Notification from "../components/Notification"
+import "../styles/update/update.css";
 
 export default class DeleteStroller extends Component {
   state = {
@@ -41,7 +42,7 @@ export default class DeleteStroller extends Component {
     return this.state.strollers.map((item, index) => {
       return (
         <option key={index} value={item.name}>
-          {item.brand} - {item.name}
+         {item.name}
         </option>
       );
     });
@@ -51,8 +52,9 @@ export default class DeleteStroller extends Component {
     let toDelete = this.state.toDelete;
     apiClient
       .deleteStroller(toDelete._id)
-      .then(() => {
-        this.loadStrollers();
+      .then(
+        this.loadStrollers(),
+        this.generateList(),
         toast.success('Deletion successful', {
           position: "top-right",
           autoClose: 3000,
@@ -61,8 +63,8 @@ export default class DeleteStroller extends Component {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
-      })
+          })
+      )
       .catch((err) => {
         console.log(err);
       });
@@ -70,9 +72,11 @@ export default class DeleteStroller extends Component {
 
   render() {
     return (
-      <div className="Delete-Container">
+      <div className="Update">
         <h2>Choose a Stroller to delete:</h2>
+  
         <select onChange={this.strollerToDelete}>{this.generateList()}</select>
+        <br></br>
         <input
           className="Submit-button"
           type="submit"

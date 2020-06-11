@@ -13,7 +13,7 @@ import Protected from "./views/Protected";
 import withFirebaseAuth from "react-with-firebase-auth";
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import firebaseConfig from "./components/firebaseConfig";
+import firebaseConfig from "./firebaseConfig";
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const firebaseAppAuth = firebaseApp.auth();
