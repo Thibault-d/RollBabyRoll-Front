@@ -88,7 +88,8 @@ export default class UpdateStroller extends Component {
     apiClient
       .updateStroller(toUpdate)
       .then(
-        toast.success('Update successful', {
+        console.log(toUpdate),
+        toast.success("Update successful", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -96,7 +97,7 @@ export default class UpdateStroller extends Component {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          })
+        })
       )
       .catch((err) => {
         console.log(err);

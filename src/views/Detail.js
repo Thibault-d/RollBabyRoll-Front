@@ -64,13 +64,13 @@ class Detail extends Component {
                 <div className="Flex-column">
                   <div>Weight: </div>
                   <div>Folded: </div>
-                  <div>Open: </div>
+  
                   <div>Max weigth: </div>
                 </div>
                 <div className="Flex-column">
                   <div>{item.weight} kg</div>
                   <div>{item.dimensionsfolded}</div>
-                  <div>{item.dimensionsopen}</div>
+
                   <div>{item.maxweight} kg</div>
                 </div>
               </div>
